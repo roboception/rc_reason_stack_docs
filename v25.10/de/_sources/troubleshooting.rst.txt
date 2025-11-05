@@ -1,0 +1,156 @@
+Fehlerbehebung
+
+Probleme mit den Kamerabildern
+
+Kamerabild ist zu hell
+
+Wenn die Kamera im manuellen Belichtungsmodus arbeitet, versuchen Sie,
+die Belichtungszeit zu verkürzen oder
+
+schalten Sie auf automatische Belichtung um.
+
+Kamerabild ist zu dunkel
+
+Wenn die Kamera im manuellen Belichtungsmodus arbeitet, versuchen Sie,
+die Belichtungszeit zu verlängern oder
+
+schalten Sie auf automatische Belichtung um.
+
+Kamerabild rauscht zu stark
+
+Große Gain-Faktoren verursachen ein Bildrauschen mit hoher Amplitude.
+Wollen Sie das Bildrauschen verringern,
+
+verwenden Sie eine zusätzliche Lichtquelle, um die Lichtintensität der
+Aufnahme zu erhöhen, oder
+
+stellen Sie eine größere maximale Autobelichtungszeit ein.
+
+Kamerabild ist unscharf
+
+Überprüfen Sie, ob das Objekt zu nahe an der Linse liegt, und erhöhen
+Sie bei Bedarf den Abstand zwischen dem Objekt und der Linse.
+
+Überprüfen Sie, ob die Kameralinsen verschmutzt sind, und reinigen Sie
+diese bei Bedarf.
+
+Trifft keiner der vorstehenden Punkte zu, kann es sein, dass ein
+schweres Hardware-Problem vorliegt. Bitte wenden Sie sich an den
+Support\:(Abschnitt \ref{contact:sect-contact}).
+
+Kamerabild ist verschwommen
+
+Schnelle Bewegungen können in Kombination mit langen Belichtungszeiten
+zu Unschärfe führen. Um Bewegungsunschärfe zu verringern,
+
+verringern Sie die Bewegungsgeschwindigkeit der Kamera,
+
+verringern Sie die Bewegungsgeschwindigkeit von Objekten im Sichtfeld
+der Kamera oder
+
+verkürzen Sie die Belichtungszeit der Kameras.
+
+Bildwiederholrate ist zu niedrig
+
+Erhöhen Sie die Bildwiederholrate.
+
+Die maximale Bildwiederholrate der Kameras beträgt 25 Hz.
+
+Probleme mit Tiefen-/Disparitäts-, Fehler- oder Konfidenzbildern
+
+Die folgenden Hinweise gelten auch für Fehler- und Konfidenzbilder, da
+sie direkt mit den Disparitätsbildern zusammenhängen.
+
+Disparitätsbild spärlich befüllt oder leer
+
+Überprüfen Sie, ob die Kamerabilder gut belichtet und scharf sind.
+Befolgen Sie bei Bedarf die Anweisungen in Probleme mit den
+Kamerabildern\:(Abschnitt \ref{troubleshooting:sect-camera-issues}).
+
+Überprüfen Sie, ob die Szene genügend Textur hat und installieren Sie
+bei Bedarf einen Musterprojektor.
+
+Senken Sie den Minimalen Abstand\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Erhöhen Sie den Maximalen Abstand\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Überprüfen Sie, ob das Objekt zu nahe an der Kamera liegt. Beachten
+Sie die unterschiedlichen Tiefenmessbereiche der Kameravarianten.
+
+Senken Sie die Minimale Konfidenz\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Erhöhen Sie den Maximalen Fehler\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Wählen Sie eine geringere Qualität des Disparitätsbilds\:(Abschnitt
+\ref{stereo_matching:sect-disp-image-parameters}). Disparitätsbilder
+mit einer geringeren Auflösung sind in der Regel nicht so spärlich
+befüllt.
+
+Überprüfen Sie die Kalibrierung der Kameras und führen Sie bei Bedarf
+eine Neukalibrierung durch (siehe Kamerakalibrierung, Abschnitt
+\ref{camera_calibration:sect-camera-calibration}).
+
+Bildwiederholrate der Disparitätsbilder ist zu niedrig
+
+Überprüfen und erhöhen Sie die Bildwiederholrate der Kamerabilder. Die
+Bildwiederholrate der Disparitätsbilder kann nicht größer sein als die
+Bildwiederholrate der Kamerabilder.
+
+Wählen Sie eine geringere Qualität des Disparitätsbilds\:(Abschnitt
+\ref{stereo_matching:sect-disp-image-parameters}).
+
+Erhöhen Sie den Minimalen Abstand\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}) so viel wie für die Applikation möglich.
+
+Disparitätsbild zeigt keine nahe liegenden Objekte
+
+Überprüfen Sie, ob das Objekt zu nahe an der Linse liegt. Beachten Sie
+die unterschiedlichen Tiefenmessbereiche der Kameravarianten.
+
+Senken Sie den Minimalen Abstand\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Disparitätsbild zeigt keine weit entfernten Objekte
+
+Erhöhen Sie den Maximalen Abstand\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Erhöhen Sie den Maximalen Fehler\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Senken Sie die Minimale Konfidenz\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Disparitätsbild rauscht zu stark
+
+Erhöhen Sie den Segmentierungswert\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Erhöhen Sie den Füllen-Wert\:(Abschnitt \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Disparitätswerte oder resultierende Tiefenwerte sind zu ungenau
+
+Verringern Sie den Abstand zwischen der Kamera und der Szene. Der
+Tiefenmessfehler nimmt quadratisch mit dem Abstand zu den Kameras zu.
+
+Überprüfen Sie, ob die Szene wiederkehrende Muster enthält und
+entfernen Sie diese bei Bedarf. Diese könnten falsche
+Disparitätsmessungen verursachen.
+
+Disparitätsbild ist zu glatt
+
+Senken Sie den Füllen-Wert\:(Abschnitt \ref{stereo_matching:sect-disp-
+image-parameters}).
+
+Disparitätsbild zeigt keine feinen Strukturen
+
+Senken Sie den Segmentierungswert\:(Abschnitt \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Senken Sie den Füllen-Wert\:(Abschnitt \ref{stereo_matching:sect-disp-
+image-parameters}).

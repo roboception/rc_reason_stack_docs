@@ -1,0 +1,249 @@
+Web GUI
+
+Die Web GUI des
+
+rc_reason_stack
+
+ dient dazu, das Gerät zu testen, zu kalibrieren und zu konfigurieren.
+
+Zugriff auf die Web GUI
+
+Auf die Web GUI des
+
+rc_reason_stack
+
+ kann von jedem Webbrowser aus zugegriffen werden, z.B. Firefox,
+Google Chrome oder Microsoft Edge, indem man die IP-Adresse des Host-
+PCs mit dem Port 8080 aufruft:
+
+   http://<host-ip>:8080/
+
+Kennenlernen der Web GUI
+
+Die Dashboard-Seite der Web GUI enthält die wichtigsten Informationen
+über das Gerät und die laufenden Kamerapipelines.
+
+
+Über das Menü kann auf die einzelnen Seiten der Web GUI des
+
+rc_reason_stack
+
+ zugegriffen werden:
+
+Pipeline
+
+   ermöglicht den Zugriff auf die zugehörige Kamerapipeline und ihre
+   Kamera-, Detektions- und Konfigurationsmodule. Jede Pipeline hat
+   eine Übersichtsseite mit den wichtigsten Informationen über die
+   Kameraverbindung und die Softwaremodule, die in der Pipeline
+   laufen.
+
+
+Jede Pipeline bietet ein Untermenü mit den einzelnen Seiten für die
+Module, die in der Pipeline laufen:
+
+Kamera
+
+   bietet einen Live-Stream der rektifizierten Bilder und ermöglicht
+   das Einstellen der Kameraparameter. Für nähere Informationen siehe
+
+   Kamera Modul
+
+   .
+
+Tiefenbild
+
+   bietet einen Live-Stream der rektifizierten Bilder der linken
+   Kamera sowie Disparitäts- und Konfidenzbilder. Auf der Seite lassen
+   sich verschiedene Einstellungen zur Berechnung und Filterung von
+   Tiefenbildern vornehmen. Für nähere Informationen siehe
+
+   3D-Module
+
+   .
+
+Module
+
+   ermöglicht den Zugriff auf die Detektionsmodule des
+
+   rc_reason_stack
+
+    (siehe
+
+   Detektions- und Messmodule
+
+   ).
+
+Konfiguration
+   ermöglicht den Zugriff auf die Konfigurationsmodule des
+
+   rc_reason_stack
+
+    (siehe
+
+   Konfigurationsmodule
+
+   ).
+
+Die folgenden Module laufen außerhalb der Kamerapipelines und können
+über das Menü erreicht werden:
+
+Datenbank
+
+   ermöglicht den Zugriff auf die Datenbankmodule des
+
+   rc_reason_stack
+
+    (siehe
+
+   Datenbankmodule
+
+   ).
+
+Generic Robot Interface
+
+   zeigt die Jobs und Hand-Auge-Kalibrierkonfigurationen, die für das
+   Generic Robot Interface definiert wurden.
+
+System
+
+   ermöglicht dem Nutzer den Zugriff auf allgemeine
+   Systemeinstellungen, Informationen zur Software, den Log-Dateien,
+   und Lizenzinformationen.
+
+Bemerkung: Weitere Informationen zu den einzelnen Parametern der Web
+  GUI lassen sich über die jeweils daneben angezeigte Schaltfläche
+
+  Info
+
+   aufrufen.
+
+Web GUI Zugriffskontrolle
+
+Die Web GUI bietet einen simplen Mechanismus das User Interface zu
+sperren um beiläufige und unbeabsichtigte Änderungen zu vermeiden.
+
+Beim aktivieren der Web GUI Zugriffskontrolle über die
+
+System
+
+ Seite muss ein Passwort gesetzt werden. Jetzt ist die Web GUI in
+einem gesperrten Zustand wie das Schloss Symbol in der Kopfleiste
+anzeigt. Alle Seiten, Kamerabilder, Parameter und Detektionen können
+wie gewohnt eingesehen werden, Änderungen sind aber nicht möglich.
+
+Um die Web GUI temporär zu entsperren und Änderungen vorzunehmen,
+klicken Sie das Schloss Symbol und geben Sie das Passwort ein. Während
+das aktivieren und deaktivieren der Web GUI Zugriffskontrolle jeden
+betrifft der diesen
+
+rc_reason_stack
+
+ nutzt, ist das Entsperren nur pro Browser gültig und wird durch das
+Symbol mit dem offenen Schloss angezeigt. Nach 10 Minutuen Inaktivität
+wird es automatisch wieder gesperrt.
+
+Die Web GUI Zugriffskontrolle kann auf der
+
+System
+
+ Seite wieder deaktiviert werden nachdem das aktuelle Passwort
+angegeben wurde.
+
+Warnung: Dies ist keine Sicherheitsfunktion! Es sperrt nur die Web
+  GUI und nicht die REST-API. Es ist dazu gedacht um unbeabsichtigte
+  und beiläufige Änderungen, z.B. über einen angeschlossenen
+  Bildschirm, zu verhindern.
+
+Bemerkung: Im Fall eines vergessenen Passworts kann die
+  Zugriffskontrolle über die REST-API mit
+
+  delete ui_lock
+
+   zurückgesetzt und deaktiviert werden.
+
+Herunterladen von Kamerabildern
+
+Die Web GUI bietet eine einfache Möglichkeit, einen Schnappschuss der
+aktuellen Szene als .tar.gz-Datei zu speichern. Dazu dient das
+Kamerasymbol unterhalb der Live-Streams auf der Seite
+
+Kamera
+
+. Dieser Schnappschuss beinhaltet:
+
+die rektifizierten Kamerabilder in voller Auflösung als .png-Dateien,
+
+eine Kameraparameter-Datei mit Kameramatrix, Bildabmessungen,
+Belichtungszeit, Verstärkungsfaktor und Basisabstand der Kameras.
+
+die aktuellen IMU-Messungen als imu.csv-Datei, falls verfügbar,
+
+eine pipeline_status.json-Datei mit Informationen aller Module, die
+innerhalb der Kamerapipelines auf dem rc_reason_stack laufen,
+
+eine backup.json-Datei mit den Einstellungen des rc_reason_stack
+einschließlich konfigurierter Greifer, Load Carrier und Regions of
+Interest,
+
+eine system_info.json-Datei mit Systeminformationen des
+rc_reason_stack.
+
+Die Dateinamen enthalten die Zeitstempel.
+
+Herunterladen von Tiefenbildern und Punktwolken
+
+Die Web GUI bietet eine einfache Möglichkeit, die Tiefendaten der
+aktuellen Szene als .tar.gz-Datei zu speichern. Dazu dient das
+Kamerasymbol unterhalb der Live-Streams auf der Seite
+
+Tiefenbild
+
+. Dieser Schnappschuss beinhaltet:
+
+die rektifizierten linken und rechten Kamerabilder in voller Auflösung
+als .png-Dateien,
+
+eine Parameterdatei für das linke Kamerabild mit Kameramatrix,
+Bildabmessungen, Belichtungszeit, Verstärkungsfaktor und Basisabstand
+der Kameras,
+
+die Disparitäts-, Fehler- und Konfidenzbilder in der Auflösung, die
+der aktuell eingestellten Qualität entspricht, als .png-Dateien,
+
+eine Parameterdatei zum Disparitätsbild mit Kameramatrix,
+Bildabmessungen, Belichtungszeit, Verstärkungsfaktor und Basisabstand
+der Kameras, sowie Informationen über die Disparitätswerte (ungültige
+Werte, Skalierung, Offset),
+
+die aktuellen IMU-Messungen als imu.csv-Datei, falls verfügbar,
+
+eine pipeline_status.json-Datei mit Informationen aller Module, die
+innerhalb der Kamerapipelines auf dem rc_reason_stack laufen,
+
+eine backup.json-Datei mit den Einstellungen des rc_reason_stack
+einschließlich konfigurierter Greifer, Load Carrier und Regions of
+Interest,
+
+eine system_info.json-Datei mit Systeminformationen des
+rc_reason_stack.
+
+Die Dateinamen enthalten die Zeitstempel.
+
+Durch Klick auf das Mesh-Symbol unterhalb der Live-Streams auf der
+Seite
+
+Tiefenbild
+
+ kann man einen Schnappschuss herunterladen, der zusätzlich ein Mesh
+der Punktwolke in der aktuell eingestellten Auflösung (Qualität) als
+>>*<<.ply Datei enthält.
+
+Bemerkung: Das Herunterladen der Tiefenbilder löst eine Bildaufnahme
+  aus, in der gleichen Weise wie ein Klick auf den "Aufnehmen"-Button
+  auf der
+
+  Tiefenbild
+
+  -Seite der Web GUI. Dies kann einen Einfluss auf laufende
+  Anwendungen haben.

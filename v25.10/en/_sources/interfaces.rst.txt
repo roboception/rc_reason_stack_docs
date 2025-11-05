@@ -1,0 +1,31 @@
+Interfaces
+
+The following interfaces are provided for configuring and obtaining
+data from the
+
+rc_reason_stack
+
+:
+
+Web GUI\:(Section \ref{webgui:sect-web-gui})  Easy-to-use graphical
+interface to configure the rc_reason_stack, do calibrations, view live
+images, do service calls, visualize results, etc.
+
+REST-API interface\:(Section \ref{rest_api:sect-rest-api})  API to
+configure the rc_reason_stack, query status information, do service
+calls, etc.
+
+Generic Robot Interface\:(Section \ref{gri:sect-gri})  TCP socket
+communication interface for configuring the rc_reason_stack and for
+service calls.
+
+OPC UA interface\:(Section \ref{opc_ua:sect-opc-ua})  OPC UA interface
+for configuring the rc_reason_stack and for service calls.
+
+KUKA Ethernet KRL Interface\:(Section \ref{eki:sect-eki})  API to
+configure the rc_reason_stack and do service calls from KUKA KSS
+robots.
+
+gRPC image stream interface\:(Section \ref{grpc:sect-grpc})  Stream
+synchronized image sets via gRPC.
+

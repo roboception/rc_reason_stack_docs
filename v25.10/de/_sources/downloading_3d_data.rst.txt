@@ -1,0 +1,29 @@
+Anzeigen und Herunterladen von Tiefenbildern und Punktwolken
+
+Der
+
+rc_reason_stack
+
+ stellt zeitgestempelte Disparitäts-, Fehler- und Konfidenzbilder über
+
+gRPC Bilddatenschnittstelle
+
+ zur Verfügung.
+
+Live-Streams in geringerer Qualität werden auf der
+
+Tiefenbild
+
+ Seite in der gewünschten Pipeline in der
+
+Web GUI
+
+ bereitgestellt.
+
+Die Web GUI bietet weiterhin die Möglichkeit, einen Schnappschuss der
+aktuellen Szene mit den Tiefen-, Fehler und Konfidenzbildern, sowie
+der Punktwolke als .tar.gz-Datei zu speichern, wie in
+
+Herunterladen von Kamerabildern
+
+ beschrieben wird.

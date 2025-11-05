@@ -1,0 +1,157 @@
+Pipelines
+
+Pipelines represent the
+
+rc_reason_stack
+
+'s camera pipelines.
+
+The following list includes all REST-API requests regarding the camera
+pipelines' configuration:
+
+GET /pipelines
+
+   Get active pipelines
+
+   Template request
+
+      GET /api/v2/pipelines HTTP/1.1
+
+   Status Codes:
+      200 OK -- successful operation
+
+GET /pipelines/{pipeline}
+
+   Get active pipeline type and status
+
+   Template request
+
+      GET /api/v2/pipelines/<pipeline> HTTP/1.1
+
+   Parameters:
+      pipeline (string) -- name of the pipeline (one of 0, 1, 2, 3)
+      (required)
+
+   Status Codes:
+      200 OK -- successful operation
+
+GET /system/pipelines
+
+   Get pipeline configuration.
+
+   Template request
+
+      GET /api/v2/system/pipelines HTTP/1.1
+
+   Sample response
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "config": {
+          "0": {
+            "type": "rc_visard"
+          }
+        },
+        "max_pipelines": 4,
+        "pending_changes": false
+      }
+
+   Response Headers:
+      Content-Type -- application/json application/ubjson
+
+   Status Codes:
+      200 OK -- successful operation
+
+GET /system/pipelines/config/{pipeline}
+
+   Get configuration for specific pipeline.
+
+   Template request
+
+      GET /api/v2/system/pipelines/config/<pipeline> HTTP/1.1
+
+   Sample response
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "0": {
+          "type": "rc_visard"
+        }
+      }
+
+   Parameters:
+      pipeline (string) -- name of the pipeline (one of 0, 1, 2, 3)
+      (required)
+
+   Response Headers:
+      Content-Type -- application/json application/ubjson
+
+   Status Codes:
+      200 OK -- successful operation
+
+PUT /system/pipelines/config/{pipeline}
+
+   Update configuration for specific pipeline.
+
+   Template request
+
+      PUT /api/v2/system/pipelines/config/<pipeline>?type=<type> HTTP/1.1
+
+   Sample response
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "type": "rc_visard"
+      }
+
+   Parameters:
+      pipeline (string) -- name of the pipeline (one of 0, 1, 2, 3)
+      (required)
+
+   Query Parameters:
+      type (string) -- pipeline type (one of rc_visard, rc_viscore,
+      blaze, zivid, stereo_ace) (required)
+
+   Response Headers:
+      Content-Type -- application/json application/ubjson
+
+   Status Codes:
+      200 OK -- successful operation
+
+      400 Bad Request -- invalid pipeline name or type
+
+DELETE /system/pipelines/config/{pipeline}
+
+   Delete specific pipeline.
+
+   Template request
+
+      DELETE /api/v2/system/pipelines/config/<pipeline> HTTP/1.1
+
+   Sample response
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "message": "Pipeline 1 deleted"
+      }
+
+   Parameters:
+      pipeline (string) -- name of the pipeline (one of 1, 2, 3)
+      (required)
+
+   Response Headers:
+      Content-Type -- application/json application/ubjson
+
+   Status Codes:
+      200 OK -- successful operation
+
+      400 Bad Request -- invalid pipeline name, e.g. pipeline 0 cannot
+      be deleted

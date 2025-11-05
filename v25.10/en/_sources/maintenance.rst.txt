@@ -1,0 +1,173 @@
+Maintenance
+
+Creating and restoring backups of settings
+
+The
+
+rc_reason_stack
+
+ offers the possibility to download the current settings as backup or
+for transferring them to a different
+
+rc_visard
+
+ or
+
+rc_cube
+
+.
+
+The current settings of the
+
+rc_reason_stack
+
+ can be downloaded on the
+
+Web GUI
+
+'s
+
+System
+
+ page in the
+
+rc_reason_stack
+
+
+Settings
+
+ section. They can also be downloaded via the
+
+rc_reason_stack
+
+'s
+
+REST-API interface
+
+ using the
+
+GET /system/backup
+
+ request.
+
+For downloading a backup, the user can choose which settings to
+include:
+
+nodes: the settings of all modules (parameters, preferred orientations
+and sorting strategies)
+
+load_carriers: the configured load carriers
+
+regions_of_interest: the configured 2D and 3D regions of interest
+
+grippers: the configured grippers (without the CAD elements)
+
+The returned backup should be stored as a .json file.
+
+The templates of the SilhouetteMatch and CADMatch modules are not
+included in the backup but can be downloaded manually using the REST-
+API or the Web GUI (see
+
+Template API
+
+ and
+
+Template API
+
+).
+
+A backup can be restored to the
+
+rc_reason_stack
+
+ on the
+
+Web GUI
+
+'s
+
+System
+
+ page in the
+
+rc_reason_stack
+
+
+Settings
+
+ section by uploading the backup .json file. In the
+
+Web GUI
+
+ the settings included in the backup are shown and can be chosen for
+restore. The corresponding
+
+REST-API interface
+
+ call is
+
+POST /system/backup
+
+.
+
+Warning: When restoring load carriers, all existing load carriers on
+  the
+
+  rc_reason_stack
+
+   will get lost and will be replaced by the content of the backup.
+  The same applies to restoring grippers and regions of interest.
+
+When restoring a backup, only the settings which are applicable to the
+
+rc_reason_stack
+
+ are restored. Parameters for modules that do not exist on the device
+or do not have a valid license will be skipped. If a backup can only
+be restored partially, the user will be notified by warnings.
+
+Updating the software license
+
+Licenses can be purchased from Roboception for enabling additional
+features.
+
+Downloading log files
+
+During operation, the
+
+rc_reason_stack
+
+ logs important information, warnings, and errors into files. If the
+
+rc_reason_stack
+
+ exhibits unexpected or erroneous behavior, the log files can be used
+to trace its origin. Log messages can be viewed and filtered using the
+
+Web GUI
+
+'s  System ‣ Logs page. If contacting the support (
+
+Contact
+
+), the log files are very useful for tracking possible problems. To
+download them as a .tar.gz file, click on Download all logs on the Web
+GUI's System ‣ Logs page.
+
+Aside from the Web GUI, the logs are also accessible via the
+
+rc_reason_stack
+
+'s
+
+REST-API interface
+
+ using the
+
+GET /logs
+
+ and
+
+GET /logs/{log}
+
+ requests.

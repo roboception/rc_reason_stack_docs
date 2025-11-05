@@ -1,0 +1,106 @@
+Safety
+
+Warning: The operator must have read and understood all of the
+  instructions in this manual before handling the
+
+  rc_reason_stack
+
+   product.
+
+Warning: If operating the
+
+  rc_reason_stack
+
+   with
+
+  rc_visard
+
+   product(s), the operator must have read and understood all of the
+  safety, installation, and maintenance instructions given in the
+
+  rc_visard
+
+   manual.
+
+Note: The term "operator" refers to anyone responsible for any of
+  the following tasks performed in conjunction with
+
+  rc_reason_stack
+
+  :
+
+     Installation
+
+     Maintenance
+
+     Inspection
+
+     Calibration
+
+     Programming
+
+     Decommissioning
+
+This manual explains the
+
+rc_reason_stack
+
+'s various components and general operations regarding the product's
+whole life-cycle, from installation through operation to
+decommissioning.
+
+The drawings and photos in this documentation are representative
+examples; differences may exist between them and the delivered
+product.
+
+General warnings
+
+Note: Any use of the
+
+  rc_reason_stack
+
+   in noncompliance with these warnings is inappropriate and may cause
+  injury or damage as well as void the warranty.
+
+Intended use
+
+Warning: The
+
+  rc_reason_stack
+
+   is
+
+  NOT
+
+   intended for safety critical applications.
+
+The GigE Vision® industry standard used by the
+
+rc_reason_stack
+
+ does not support authentication and encryption. All data from and to
+the device is transmitted without authentication and encryption and
+could be monitored or manipulated by a third party. It is the
+operator's responsibility to connect the
+
+rc_reason_stack
+
+ only to a secured internal network.
+
+Warning: The
+
+  rc_reason_stack
+
+   must be connected to secured internal networks.
+
+The
+
+rc_reason_stack
+
+ may be used only within the scope of its technical specification. Any
+other use of the product is deemed unintended use. Roboception will
+not be liable for any damages resulting from any improper or
+unintended use.
+
+Warning: Always comply with local and/or national laws, regulations
+  and directives on automation safety and general machine safety.

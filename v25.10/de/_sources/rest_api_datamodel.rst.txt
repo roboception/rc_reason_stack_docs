@@ -1,0 +1,590 @@
+Datentyp-Definitionen
+
+Die REST-API definiert folgende Datenmodelle, die verwendet werden, um
+auf die
+
+verfügbaren Ressourcen
+
+  zuzugreifen oder diese zu ändern, entweder als benötigte
+Attribute/Parameter oder als Rückgabewerte.
+
+GripperElement:
+   CAD-Greiferelement
+
+   Ein Objekt des Typs GripperElement besitzt folgende Eigenschaften:
+
+   id (string): Eindeutiger Name des Elements
+
+   Musterobjekt
+
+      {
+        "id": "string"
+      }
+
+   GripperElement-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /cad/gripper_elements
+
+      GET /cad/gripper_elements/{id}
+
+      PUT /cad/gripper_elements/{id}
+
+ImageInfo:
+   Informationen zu einem bestimmten Firmware-Image.
+
+   Ein Objekt des Typs ImageInfo besitzt folgende Eigenschaften:
+
+   image_version (string): Image-Version.
+
+   Musterobjekt
+
+      {
+        "image_version": "string"
+      }
+
+   ImageInfo-Objekte sind in
+
+   FirmwareInfo
+
+    enthalten.
+
+LicenseComponentConstraint:
+   Einschränkungen für die Modul-Version.
+
+   Ein Objekt des Typs LicenseComponentConstraint besitzt folgende
+   Eigenschaften:
+
+   max_version (string) - optionale höchste unterstützte Version
+   (exclusive)
+
+   min_version (string) - optionale minimale unterstützte Version
+   (inclusive)
+
+   Musterobjekt
+
+      {
+        "max_version": "string",
+        "min_version": "string"
+      }
+
+   LicenseComponentConstraint-Objekte sind in
+
+   LicenseConstraints
+
+    enthalten.
+
+LicenseComponents:
+   Liste der Lizenzstatus-Angaben der einzelnen Softwaremodule: Der
+   zugehörige Statusindikator ist auf TRUE gesetzt, wenn das
+   entsprechende Modul mit einer installierten Softwarelizenz
+   entsperrt ist.
+
+   Ein Objekt des Typs LicenseComponents besitzt folgende
+   Eigenschaften:
+
+   hand_eye_calibration (boolean): Modul zur Hand-Auge-Kalibrierung.
+
+   rectification (boolean): Modul zur Bildrektifizierung.
+
+   stereo (boolean): Stereo-Matching-Modul.
+
+   Musterobjekt
+
+      {
+        "hand_eye_calibration": false,
+        "rectification": false,
+        "stereo": false
+      }
+
+   LicenseComponents-Objekte sind in
+
+   LicenseInfo
+
+    enthalten.
+
+LicenseConstraints:
+   Versionseinschränkungen für Module.
+
+   Ein Objekt des Typs LicenseConstraints besitzt folgende
+   Eigenschaften:
+
+   image_version (LicenseComponentConstraint) - siehe Beschreibung von
+   LicenseComponentConstraint
+
+   Musterobjekt
+
+      {
+        "image_version": {
+          "max_version": "string",
+          "min_version": "string"
+        }
+      }
+
+   LicenseConstraints-Objekte sind in
+
+   LicenseInfo
+
+    enthalten.
+
+LicenseInfo:
+   Informationen zur aktuell auf dem Gerät angewandten Softwarelizenz.
+
+   Ein Objekt des Typs LicenseInfo besitzt folgende Eigenschaften:
+
+   components (LicenseComponents): siehe Beschreibung von
+   LicenseComponents.
+
+   components_constraints (LicenseConstraints) - siehe Beschreibung
+   von LicenseConstraints
+
+   valid (boolean): Angabe, ob eine Lizenz gültig ist oder nicht.
+
+   Musterobjekt
+
+      {
+        "components": {
+          "hand_eye_calibration": false,
+          "rectification": false,
+          "stereo": false
+        },
+        "components_constraints": {
+          "image_version": {
+            "max_version": "string",
+            "min_version": "string"
+          }
+        },
+        "valid": false
+      }
+
+   LicenseInfo-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /system/license
+
+Log:
+   Inhalt einer bestimmten Logdatei im JSON-Format.
+
+   Ein Objekt des Typs Log besitzt folgende Eigenschaften:
+
+   date (float): UNIX-Uhrzeit, zu der das Log zuletzt geändert wurde.
+
+   log (LogEntry-Array): die eigentlichen Logeinträge.
+
+   name (string): Name der Logdatei.
+
+   size (Integer): Größe der Logdatei in Bytes.
+
+   Musterobjekt
+
+      {
+        "date": 0,
+        "log": [
+          {
+            "component": "string",
+            "level": "string",
+            "message": "string",
+            "timestamp": 0
+          },
+          {
+            "component": "string",
+            "level": "string",
+            "message": "string",
+            "timestamp": 0
+          }
+        ],
+        "name": "string",
+        "size": 0
+      }
+
+   Log-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /logs/{log}
+
+LogEntry:
+   Darstellung eines einzelnen Logeintrags in einer Logdatei.
+
+   Ein Objekt des Typs LogEntry besitzt folgende Eigenschaften:
+
+   component (string): Name des Moduls, das diesen Eintrag angelegt
+   hat.
+
+   level (string): Logstufe (mögliche Werte: DEBUG, INFO, WARN, ERROR
+   oder FATAL)
+
+   message (string): eigentliche Lognachricht.
+
+   timestamp (float): UNIX-Uhrzeit des Logeintrags.
+
+   Musterobjekt
+
+      {
+        "component": "string",
+        "level": "string",
+        "message": "string",
+        "timestamp": 0
+      }
+
+   LogEntry-Objekte sind in
+
+   Log
+
+    enthalten.
+
+LogInfo:
+   Informationen zu einer bestimmten Logdatei.
+
+   Ein Objekt des Typs LogInfo besitzt folgende Eigenschaften:
+
+   date (float): UNIX-Uhrzeit, zu der das Log zuletzt geändert wurde.
+
+   name (string): Name der Logdatei.
+
+   size (Integer): Größe der Logdatei in Bytes.
+
+   Musterobjekt
+
+      {
+        "date": 0,
+        "name": "string",
+        "size": 0
+      }
+
+   LogInfo-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /logs
+
+NodeInfo:
+   Beschreibung eines auf dem Gerät laufenden Softwaremoduls.
+
+   Ein Objekt des Typs NodeInfo besitzt folgende Eigenschaften:
+
+   name (string): Name des Moduls.
+
+   parameters (string-Array): Liste der Laufzeitparameter des Moduls.
+
+   services (string-Array): Liste der von diesem Modul angebotenen
+   Services.
+
+   status (string): Status des Moduls (mögliche Werte: unknown, down,
+   idle oder running).
+
+   Musterobjekt
+
+      {
+        "name": "string",
+        "parameters": [
+          "string",
+          "string"
+        ],
+        "services": [
+          "string",
+          "string"
+        ],
+        "status": "string"
+      }
+
+   NodeInfo-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /nodes
+
+      GET /nodes/{node}
+
+      GET /pipelines/{pipeline}/nodes
+
+      GET /pipelines/{pipeline}/nodes/{node}
+
+NodeStatus:
+   Detaillierter aktueller Status des Moduls, einschließlich
+   Laufzeitstatistik.
+
+   Ein Objekt des Typs NodeStatus besitzt folgende Eigenschaften:
+
+   status (string): Status des Moduls (mögliche Werte: unknown, down,
+   idle oder running).
+
+   timestamp (float): UNIX-Uhrzeit, zu der die Werte zuletzt
+   aktualisiert wurden.
+
+   values (object): Dictionary (Schlüssel-Werte-Auflistung) mit den
+   aktuellen Statuswerten/Statistiken des Moduls.
+
+   Musterobjekt
+
+      {
+        "status": "string",
+        "timestamp": 0,
+        "values": {}
+      }
+
+   NodeStatus-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /nodes/{node}/status
+
+      GET /pipelines/{pipeline}/nodes/{node}/status
+
+Parameter:
+   Darstellung der Laufzeitparameter eines Moduls: Der Datentyp des
+   Werts („value“) eines Parameters (und damit der Datentyp der Felder
+   „min“, „max“ und „default“) lässt sich vom Feld „type“ ableiten und
+   kann ein primitiver Datentyp sein.
+
+   Ein Objekt des Typs Parameter besitzt folgende Eigenschaften:
+
+   default (Typ nicht definiert): ab Werk voreingestellter Wert des
+   Parameters.
+
+   description (string): Beschreibung des Parameters.
+
+   max (Typ nicht definiert): Höchstwert, der diesem Parameter
+   zugewiesen werden kann.
+
+   min (Typ nicht definiert): Mindestwert, der diesem Parameter
+   zugewiesen werden kann.
+
+   name (string): Name des Parameters.
+
+   type (string): als Zeichenfolge dargestellter primitiver Datentyp
+   des Parameters (mögliche Werte: bool, int8, uint8, int16, uint16,
+   int32, uint32, int64, uint64, float32, float64 oder string).
+
+   value (Typ nicht definiert): aktueller Wert des Parameters.
+
+   Musterobjekt
+
+      {
+        "default": {},
+        "description": "string",
+        "max": {},
+        "min": {},
+        "name": "string",
+        "type": "string",
+        "value": {}
+      }
+
+   Parameter-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /pipelines/{pipeline}/nodes/{node}/parameters
+
+      PUT /pipelines/{pipeline}/nodes/{node}/parameters
+
+      GET /pipelines/{pipeline}/nodes/{node}/parameters/{param}
+
+      PUT /pipelines/{pipeline}/nodes/{node}/parameters/{param}
+
+ParameterNameValue:
+   Parametername und -wert. Der Typ des Parameterwerts (Felder 'value'
+   und 'min', 'max', 'default') ist durch das Feld 'type' angegeben
+   und kann einer der eingebauten primitiven Datentypen sein.
+
+   Ein Objekt des Typs ParameterNameValue besitzt folgende
+   Eigenschaften:
+
+   name (string): Name des Parameters.
+
+   value (Typ nicht definiert): aktueller Wert des Parameters.
+
+   Musterobjekt
+
+      {
+        "name": "string",
+        "value": {}
+      }
+
+   ParameterNameValue-Objekte werden in folgenden Anfragen verwendet:
+
+      PUT /pipelines/{pipeline}/nodes/{node}/parameters
+
+ParameterValue:
+   Parameterwert. Der Typ des Parameterwerts (Felder 'value' und
+   'min', 'max', 'default') ist durch das Feld 'type' angegeben und
+   kann einer der eingebauten primitiven Datentypen sein.
+
+   Ein Objekt des Typs ParameterValue besitzt folgende Eigenschaften:
+
+   value (Typ nicht definiert): aktueller Wert des Parameters.
+
+   Musterobjekt
+
+      {
+        "value": {}
+      }
+
+   ParameterValue-Objekte werden in folgenden Anfragen verwendet:
+
+      PUT /pipelines/{pipeline}/nodes/{node}/parameters/{param}
+
+ProxySettings:
+   HTTP Proxy Einstellungen für das Pullen von Container-Images und
+   Git Repositories
+
+   Ein Objekt des Typs ProxySettings besitzt folgende Eigenschaften:
+
+   http_proxy (string) - HTTP proxy
+
+   https_proxy (string) - HTTPS proxy
+
+   Musterobjekt
+
+      {
+        "http_proxy": "string",
+        "https_proxy": "string"
+      }
+
+Service:
+   Darstellung eines von einem Modul angebotenen Services.
+
+   Ein Objekt des Typs Service besitzt folgende Eigenschaften:
+
+   args (ServiceArgs): siehe Beschreibung von ServiceArgs.
+
+   description (string): Kurzbeschreibung des Services.
+
+   name (string): Name des Services.
+
+   response (ServiceResponse): siehe Beschreibung von ServiceResponse.
+
+   Musterobjekt
+
+      {
+        "args": {},
+        "description": "string",
+        "name": "string",
+        "response": {}
+      }
+
+   Service-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /nodes/{node}/services
+
+      GET /nodes/{node}/services/{service}
+
+      PUT /nodes/{node}/services/{service}
+
+      GET /pipelines/{pipeline}/nodes/{node}/services
+
+      GET /pipelines/{pipeline}/nodes/{node}/services/{service}
+
+      PUT /pipelines/{pipeline}/nodes/{node}/services/{service}
+
+ServiceArgs:
+   Argumente, die für den Aufruf eines Services benötigt werden: Diese
+   Argumente werden in der Regel in einem (verschachtelten) Dictionary
+   (Schlüssel-Werte-Auflistung) dargestellt. Der genaue Inhalt dieses
+   Dictionarys hängt vom jeweiligen Modul und vom Serviceaufruf ab.
+
+   ServiceArg-Objekte sind in
+
+   Service
+
+    enthalten.
+
+ServiceResponse:
+   Die von dem Serviceaufruf zurückgegebene Antwort: Die Antwort wird
+   in der Regel in einem (verschachtelten) Dictionary (Schlüssel-
+   Werte-Auflistung) dargestellt. Der genaue Inhalt dieses Dictionarys
+   hängt vom jeweiligen Modul und von dem Serviceaufruf ab.
+
+   ServiceResponse-Objekte sind in
+
+   Service
+
+    enthalten.
+
+SysInfo:
+   Systeminformationen über das Gerät.
+
+   Ein Objekt des Typs SysInfo besitzt folgende Eigenschaften:
+
+   hostname (string): Host-Name.
+
+   link_speed (Integer): Ethernet-Verbindungsgeschwindigkeit in
+   Mb/Sekunde.
+
+   mac (string): MAC-Adresse.
+
+   ready (boolean): Das System ist vollständig hochgefahren und
+   betriebsbereit.
+
+   sensor_interfaces (object) - Verfügbare Sensorinterfaces mit ihren
+   aktuellen Verbindungsgeschwindigkeiten
+
+   serial (string): Seriennummer des Geräts.
+
+   time (float): Systemzeit als UNIX-Zeitstempel.
+
+   ui_lock (UILock): siehe Beschreibung von UILock
+
+   uptime (float):  Betriebszeit in Sekunden.
+
+   Musterobjekt
+
+      {
+        "hostname": "string",
+        "link_speed": 0,
+        "mac": "string",
+        "ready": false,
+        "sensor_interfaces": {},
+        "serial": "string",
+        "time": 0,
+        "ui_lock": {
+          "enabled": false
+        },
+        "uptime": 0
+      }
+
+   SysInfo-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /system
+
+Template:
+   Template für die Erkennung
+
+   Ein Objekt des Typs Template besitzt folgende Eigenschaften:
+
+   id (string): Eindeutiger Name des Templates
+
+   Musterobjekt
+
+      {
+        "id": "string"
+      }
+
+   Template-Objekte werden in folgenden Anfragen verwendet:
+
+      GET /templates/rc_boxpick
+
+      GET /templates/rc_boxpick/{id}
+
+      PUT /templates/rc_boxpick/{id}
+
+      GET /templates/rc_cadmatch
+
+      GET /templates/rc_cadmatch/{id}
+
+      PUT /templates/rc_cadmatch/{id}
+
+      GET /templates/rc_silhouettematch
+
+      GET /templates/rc_silhouettematch/{id}
+
+      PUT /templates/rc_silhouettematch/{id}
+
+UILock:
+   UI Lock Status.
+
+   Ein Objekt des Typs UILock besitzt folgende Eigenschaften:
+
+   enabled (boolean)
+
+   Musterobjekt
+
+      {
+        "enabled": false
+      }
+
+   UILock-Objekte sind in
+
+   SysInfo
+
+    enthalten und werden für folgende Anfragen verwendet:
+
+      GET /system/ui_lock

@@ -1,0 +1,24 @@
+Viewing and downloading images
+
+The
+
+rc_reason_stack
+
+ provides time-stamped rectified images via the
+
+gRPC image stream interface
+
+.
+
+Live streams of the images are provided with reduced quality in the
+
+Web GUI
+
+.
+
+The Web GUI also provides the possibility to download a snapshot of
+the current scene as a .tar.gz file as described in
+
+Downloading camera images
+
+.

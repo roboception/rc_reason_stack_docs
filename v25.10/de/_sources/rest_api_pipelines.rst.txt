@@ -1,0 +1,157 @@
+Pipelines
+
+Pipelines repräsentieren die Kamerapipelines des
+
+rc_reason_stack
+
+.
+
+Die folgende Liste enthält alle REST-API Anfragen bezüglich der
+Konfiguration der Kamerapipelines:
+
+GET /pipelines
+
+   Abruf der aktiven Pipelines
+
+   Musteranfrage
+
+      GET /api/v2/pipelines HTTP/1.1
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /pipelines/{pipeline}
+
+   Abruf des Pipeline-Typs und -Status
+
+   Musteranfrage
+
+      GET /api/v2/pipelines/<pipeline> HTTP/1.1
+
+   Parameter:
+      pipeline (string) -- Name der Pipeline (0, 1, 2 oder 3)
+      (obligatorisch)
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /system/pipelines
+
+   Abruf der Pipelinekonfiguration
+
+   Musteranfrage
+
+      GET /api/v2/system/pipelines HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "config": {
+          "0": {
+            "type": "rc_visard"
+          }
+        },
+        "max_pipelines": 4,
+        "pending_changes": false
+      }
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /system/pipelines/config/{pipeline}
+
+   Abruf der Konfiguration einer spezifischen Pipeline.
+
+   Musteranfrage
+
+      GET /api/v2/system/pipelines/config/<pipeline> HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "0": {
+          "type": "rc_visard"
+        }
+      }
+
+   Parameter:
+      pipeline (string) -- Name der Pipeline (0, 1, 2 oder 3)
+      (obligatorisch)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+PUT /system/pipelines/config/{pipeline}
+
+   Updaten der Konfiguration einer spezifischen Pipeline.
+
+   Musteranfrage
+
+      PUT /api/v2/system/pipelines/config/<pipeline>?type=<type> HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "type": "rc_visard"
+      }
+
+   Parameter:
+      pipeline (string) -- Name der Pipeline (0, 1, 2 oder 3)
+      (obligatorisch)
+
+   Anfrageparameter:
+      type (string) -- Pipelinetyp (rc_visard, rc_viscore,``blaze``,
+      zivid, stereo_ace) (obligatorisch)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      400 Bad Request -- ungültiger Pipelinename oder -typ
+
+DELETE /system/pipelines/config/{pipeline}
+
+   Lösche spezifische Pipelines
+
+   Musteranfrage
+
+      DELETE /api/v2/system/pipelines/config/<pipeline> HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "message": "Pipeline 1 deleted"
+      }
+
+   Parameter:
+      pipeline (string) -- Name der Pipeline (0, 1, 2 oder 3)
+      (obligatorisch)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      400 Bad Request -- ungültiger Pipelinename, z.B. kann Pipeline 0
+      nicht gelöscht werden

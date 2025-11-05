@@ -1,0 +1,183 @@
+Wartung
+
+Backup der Einstellungen
+
+Der
+
+rc_reason_stack
+
+ bietet die Möglichkeit, die aktuellen Einstellungen als Backup oder
+zum Übertragen auf einen anderen
+
+rc_visard
+
+ oder
+
+rc_cube
+
+ herunterzuladen.
+
+Die aktuellen Einstellungen des
+
+rc_reason_stack
+
+ können über die
+
+Web GUI
+
+ auf der Seite
+
+System
+
+ im Abschnitt
+
+rc_reason_stack
+
+
+Einstellungen
+
+ heruntergeladen werden, oder über die
+
+REST-API-Schnittstelle
+
+ des
+
+rc_reason_stack
+
+ mit Hilfe des Aufrufs
+
+GET /system/backup
+
+.
+
+Beim Herunterladen des Backups kann der Nutzer entscheiden, welche
+Einstellungen das Backup enthalten soll:
+
+nodes: die Einstellungen aller Module (Parameter, bevorzugte TCP-
+Orientierungen und Sortierstrategien)
+
+load_carriers: die erstellten Load Carrier
+
+regions_of_interest: die erstellten 2D und 3D Regions of Interest
+
+grippers: die erstellten Greifer (ohne CAD Elemente)
+
+Das zurückgelieferte Backup sollte als .json-Datei gespeichert werden.
+
+Die Templates der SilhouetteMatch und CADMatch Module sind nicht im
+Backup enthalten, aber können manuell über die REST-API oder die Web
+GUI heruntergeladen werden (siehe
+
+Template API
+
+ und
+
+Template API
+
+).
+
+Ein Backup kann auf dem
+
+rc_reason_stack
+
+ über die
+
+Web GUI
+
+ auf der Seite
+
+System
+
+ im Abschnitt
+
+rc_reason_stack
+
+
+Einstellungen
+
+ eingespielt werden, indem die Backup .json-Datei hochgeladen wird. In
+der
+
+Web GUI
+
+ werden die im Backup enthaltenen Einstellungen  angezeigt und können
+für das Einspielen ausgewählt werden. Der zugehörige Aufruf der
+
+REST-API-Schnittstelle
+
+ ist
+
+POST /system/backup
+
+.
+
+Warnung: Wenn ein Backup von Load Carriern eingespielt wird, gehen
+  alle bestehenden Load Carrier auf dem
+
+  rc_reason_stack
+
+   verloren und werden durch die Load Carrier im Backup ersetzt. Das
+  gleiche trifft auf das Einspielen von Greifern und Regions of
+  Interest zu.
+
+Wenn ein Backup eingespielt wird, werden nur die Einstellungen
+gesetzt, die für den jeweiligen
+
+rc_reason_stack
+
+ zutreffend sind. Parameter für Module, die nicht existieren oder
+keine gültige Lizenz haben, werden ignoriert. Wenn ein Backup nur
+teilweise eingespielt werden konnte, wird der Benutzer über Warnungen
+darüber informiert.
+
+Aktualisierung der Softwarelizenz
+
+Lizenzen zur Aktivierung zusätzlicher Funktionen können von
+Roboception erworben werden.
+
+Download der Logdateien
+
+Während des Betriebs dokumentiert der
+
+rc_reason_stack
+
+ wichtige Informationen, Hinweise und Fehler in sogenannten
+Logdateien. Zeigt der
+
+rc_reason_stack
+
+ ein unerwartetes oder fehlerhaftes Verhalten, kann mithilfe der
+Logdateien nach der Fehlerursache geforscht werden. Logeinträge lassen
+sich über die Seite System ‣ Logs auf der
+
+Web GUI
+
+  ansehen und filtern. Wird der Support kontaktiert (
+
+Kontakt
+
+), sind die Logdateien sehr hilfreich, um Probleme aufzuspüren. Um
+diese als tar.gz-Datei herunterzuladen, ist der Button Alle Logs
+herunterladen auf der Seite System ‣ Logs der Web GUI unter
+
+System
+
+ zu klicken.
+
+Die Logs sind nicht nur über die Web GUI, sondern auch über die
+
+REST-API-Schnittstelle
+
+ des
+
+rc_reason_stack
+
+ zugänglich. Hierfür können die Anfragen des Typs
+
+GET /logs
+
+ und
+
+GET /logs/{log}
+
+ verwendet werden.

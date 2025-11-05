@@ -1,0 +1,50 @@
+Overview
+
+The
+
+rc_reason_stack
+
+ is a high-performance 3D-image-processing Docker software stack for
+deployment on Ubuntu machines. It enhances the computing capabilities
+of the Roboception stereo camera
+
+rc_visard
+
+ and supports the
+
+rc_viscore
+
+, the Basler
+
+Stereo ace
+
+ camera, the
+
+Orbbec
+
+ camera and the
+
+zivid
+
+ camera.
+
+The
+
+rc_reason_stack
+
+ provides real-time camera images and depth images, which can be used
+to compute 3D point clouds. Additionally, it provides confidence and
+error images as quality measures for each image acquisition. It offers
+an intuitive web UI (user interface) and standardized interfaces,
+making it compatible with all major image processing libraries.
+
+With optionally available software modules the
+
+rc_reason_stack
+
+ provides out-of-the-box solutions for object detection and robotic
+pick-and-place applications.
+
+Note: This manual uses the metric system and mostly uses the units
+  meter and millimeter. Unless otherwise specified, all dimensions in
+  technical drawings are in millimeters.

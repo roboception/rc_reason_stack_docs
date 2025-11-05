@@ -1,0 +1,522 @@
+System und Logs
+
+Die folgenden Ressourcen und Anfragen sind für die System-Level-API
+des
+
+rc_reason_stack
+
+ verfügbar. Sie ermöglichen Folgendes:
+
+   Zugriff auf Logdateien (systemweit oder modulspezifisch),
+
+   Abruf von Informationen zum Gerät und zur Laufzeitstatistik, wie
+   Datum, MAC-Adresse, Uhrzeitsynchronisierungsstatus und verfügbare
+   Ressourcen,
+
+   Verwaltung installierter Softwarelizenzen, und
+
+   Aktualisierung des Firmware-Images des rc_reason_stack.
+
+GET /logs
+
+   Abruf einer Liste aller verfügbaren Logdateien.
+
+   Musteranfrage
+
+      GET /api/v2/logs HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      [
+        {
+          "date": 1503060035.0625782,
+          "name": "rcsense-api.log",
+          "size": 730
+        },
+        {
+          "date": 1503060035.741574,
+          "name": "stereo.log",
+          "size": 39024
+        },
+        {
+          "date": 1503060044.0475223,
+          "name": "camera.log",
+          "size": 1091
+        }
+      ]
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung (Rückgabe: LogInfo-Array)
+
+   Referenzierte Datenmodelle:
+      LogInfo\:(Abschnitt \ref{rest_api_datamodel:sect-rest-datamodel-
+      loginfo})
+
+GET /logs/{log}
+
+   Abruf einer Logdatei: Die Art des Inhalts der Antwort richtet sich
+   nach dem *format*-Parameter.
+
+   Musteranfrage
+
+      GET /api/v2/logs/<log>?format=<format>&limit=<limit> HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "date": 1581609251.8168414,
+        "log": [
+          {
+            "component": "rc_gev_server",
+            "level": "INFO",
+            "message": "Application from IP 10.0.1.7 registered with control access.",
+            "timestamp": 1581609249.61
+          },
+          {
+            "component": "rc_gev_server",
+            "level": "INFO",
+            "message": "Application from IP 10.0.1.7 deregistered.",
+            "timestamp": 1581609249.739
+          },
+          {
+            "component": "rc_gev_server",
+            "level": "INFO",
+            "message": "Application from IP 10.0.1.7 registered with control access.",
+            "timestamp": 1581609250.94
+          },
+          {
+            "component": "rc_gev_server",
+            "level": "INFO",
+            "message": "Application from IP 10.0.1.7 deregistered.",
+            "timestamp": 1581609251.819
+          }
+        ],
+        "name": "gev.log",
+        "size": 42112
+      }
+
+   Parameter:
+      log (string) -- Name der Logdatei (obligatorisch)
+
+   Anfrageparameter:
+      format (string) -- Rückgabe des Logs im JSON- oder
+      Rohdatenformat (mögliche Werte: json oder raw; Voreinstellung:
+      json) (optional)
+
+      limit (integer) -- Beschränkung auf die letzten x Zeilen im
+      JSON-Format (Voreinstellung: 100) (optional)
+
+   Antwort-Headers:
+      Content-Type -- text/plain application/json
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung (Rückgabe: Log)
+
+      404 Not Found -- Log nicht gefunden
+
+   Referenzierte Datenmodelle:
+      Log\:(Abschnitt \ref{rest_api_datamodel:sect-rest-datamodel-
+      log})
+
+GET /system
+
+   Abruf von Systeminformationen zum Gerät.
+
+   Musteranfrage
+
+      GET /api/v2/system HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "dongle_id": "dinkey:1234",
+        "hostname": "rc-cube-00012e96ef39",
+        "link_speed": 1000,
+        "mac": "00:01:2e:96:ef:39",
+        "model_name": "rc_cube S",
+        "pipelines": {
+          "config": {
+            "0": {
+              "type": "rc_visard"
+            },
+            "1": {
+              "type": "rc_visard"
+            }
+          },
+          "max_pipelines": 2,
+          "pending_changes": false
+        },
+        "ready": true,
+        "reboot_required": false,
+        "sensor_interfaces": {
+          "sensor0": {
+            "link_speed": 2500
+          }
+        },
+        "serial": "00012e96ef39",
+        "time": 1649678734.0306993,
+        "uptime": 336455.25,
+        "userspace": {
+          "available": true,
+          "enabled": true
+        }
+      }
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung (Rückgabe: SysInfo)
+
+   Referenzierte Datenmodelle:
+      SysInfo\:(Abschnitt \ref{rest_api_datamodel:sect-rest-datamodel-
+      sysinfo})
+
+GET /system/backup
+
+   Abruf eines Backups der Einstellungen.
+
+   Musteranfrage
+
+      GET /api/v2/system/backup?pipelines=<pipelines>&load_carriers=<load_carriers>&regions_of_interest=<regions_of_interest>&grippers=<grippers> HTTP/1.1
+
+   Anfrageparameter:
+      pipelines (boolean) -- Backup der Pipelines mit
+      Moduleinstellungen, d.h. Parameter und bevorzugte TCP-
+      Orientierung (Standardwert: True) (optional)
+
+      load_carriers (boolean) -- Backup der Load Carrier
+      (Standardwert: True) (optional)
+
+      regions_of_interest (boolean) -- Backup der Regions of Interest
+      (Standardwert: True) (optional)
+
+      grippers (boolean) -- Backup der Greifer (Standardwert: True)
+      (optional)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+POST /system/backup
+
+   Backup einspielen.
+
+   Musteranfrage
+
+      POST /api/v2/system/backup HTTP/1.1
+      Accept: application/json application/ubjson
+
+      {}
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "return_code": {
+          "message": "backup restored",
+          "value": 0
+        },
+        "warnings": []
+      }
+
+   Request JSON Object:
+      backup (object) -- Backup-Daten als json-Objekt (erforderlich)
+
+   Anfrage-Header:
+      Accept -- application/json application/ubjson
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /system/ca_certificates
+
+   Abruf der CA Zertifikate.
+
+   Musteranfrage
+
+      GET /api/v2/system/ca_certificates HTTP/1.1
+
+   Antwort-Headers:
+      Content-Type -- application/json
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /system/ca_certificates/{id}
+
+   Abruf der CA-Zertifikatsdatei oder ihrer Details.
+
+   Musteranfrage
+
+      GET /api/v2/system/ca_certificates/<id> HTTP/1.1
+
+   Parameter:
+      id (string) -- ID/Dateiname ohne Endung (obligatorisch)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/octet-stream
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      404 Not Found -- crt Datei nicht gefunden
+
+PUT /system/ca_certificates/{id}
+
+   Erstellen oder updaten einer crt Datei.
+
+   Musteranfrage
+
+      PUT /api/v2/system/ca_certificates/<id> HTTP/1.1
+      Accept: multipart/form-data application/json
+
+   Parameter:
+      id (string) -- ID/Dateiname ohne Endung (obligatorisch)
+
+   Formularparameter:
+      file -- crt Datei (obligatorisch)
+
+   Anfrage-Header:
+      Accept -- Multipart/Formulardaten application/json
+
+   Antwort-Headers:
+      Content-Type -- application/json
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      400 Bad Request -- crt ist nicht gültig oder maximale Anzahl
+      Elemente erreicht
+
+      413 Request Entity Too Large -- Datei zu groß
+
+DELETE /system/ca_certificates/{id}
+
+   Löschen einer crt Datei.
+
+   Musteranfrage
+
+      DELETE /api/v2/system/ca_certificates/<id> HTTP/1.1
+      Accept: application/json
+
+   Parameter:
+      id (string) -- ID/Dateiname ohne Endung (obligatorisch)
+
+   Anfrage-Header:
+      Accept -- application/json
+
+   Antwort-Headers:
+      Content-Type -- application/json
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      404 Not Found -- Element nicht gefunden
+
+GET /system/disk_info
+
+   Abruf der Speicherinformation
+
+   Musteranfrage
+
+      GET /api/v2/system/disk_info HTTP/1.1
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+GET /system/license
+
+   Abruf von Informationen zu den auf dem Gerät installierten
+   Lizenzen.
+
+   Musteranfrage
+
+      GET /api/v2/system/license HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "components": {
+          "hand_eye_calibration": true,
+          "rectification": true,
+          "stereo": true
+        },
+        "valid": true
+      }
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung (Rückgabe: LicenseInfo)
+
+   Referenzierte Datenmodelle:
+      LicenseInfo\:(Abschnitt \ref{rest_api_datamodel:sect-rest-
+      datamodel-licenseinfo})
+
+POST /system/license
+
+   Aktualisierung der auf dem Gerät installierten Lizenz mithilfe
+   einer Lizenzdatei.
+
+   Musteranfrage
+
+      POST /api/v2/system/license HTTP/1.1
+      Accept: multipart/form-data
+
+   Formularparameter:
+      file -- Lizenzdatei (obligatorisch)
+
+   Anfrage-Header:
+      Accept -- Multipart/Formulardaten
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+      400 Bad Request -- Keine gültige Lizenz
+
+GET /system/max_power_test
+
+   Abruf des letzten Maximalleistungstests.
+
+   Musteranfrage
+
+      GET /api/v2/system/max_power_test HTTP/1.1
+
+   Antwort-Headers:
+      Content-Type -- application/json
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+POST /system/max_power_test
+
+   Ausführen des Maximalleistungstests. Führt eine maximale Belastung
+   der GPU (und CPU) durch, damit 10 Sekunden lang maximale Leistung
+   verbraucht wird, um die Stromversorgung zu testen. WARNUNG: Das
+   System gibt aufgrund eines sofortigen Neustarts möglicherweise
+   keine Antwort zurück, wenn die Stromversorgung nicht ausreicht.
+
+   Musteranfrage
+
+      POST /api/v2/system/max_power_test?nocpu=<nocpu> HTTP/1.1
+
+   Anfrageparameter:
+      nocpu (boolean) -- Nur die GPU belasten, keine CPU Worker
+      ausführen (optional)
+
+   Antwort-Headers:
+      Content-Type -- application/json
+
+   Statuscodes:
+      200 OK -- Test abgeschlossen. Siehe return_code für das
+      Ergebnis.
+
+      400 Bad Request -- Test läuft bereits.
+
+GET /system/ui_lock
+
+   Abruf des UI Lock Status
+
+   Musteranfrage
+
+      GET /api/v2/system/ui_lock HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "enabled": false
+      }
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung (Rückgabe: UILock)
+
+   Referenzierte Datenmodelle:
+      UILock\:(Abschnitt \ref{rest_api_datamodel:sect-rest-datamodel-
+      uilock})
+
+DELETE /system/ui_lock
+
+   UI Lock entfernen.
+
+   Musteranfrage
+
+      DELETE /api/v2/system/ui_lock HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "enabled": false,
+        "valid": false
+      }
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung
+
+POST /system/ui_lock
+
+   Verifizieren oder Setzen des UI Locks.
+
+   Musteranfrage
+
+      POST /api/v2/system/ui_lock?hash=<hash>&set=<set> HTTP/1.1
+
+   Beispielantwort
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "enabled": true,
+        "valid": true
+      }
+
+   Anfrageparameter:
+      hash (string) -- Hash des UI Lock Passworts (obligatorisch)
+
+      set (boolean) -- neuen Hash setzen anstatt zu verifizieren
+      (optional)
+
+   Antwort-Headers:
+      Content-Type -- application/json application/ubjson
+
+   Statuscodes:
+      200 OK -- Erfolgreiche Verarbeitung

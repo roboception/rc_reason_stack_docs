@@ -1,0 +1,23 @@
+Messprinzipien
+
+Der
+
+rc_reason_stack
+
+ ist ein performanter 3D-Bildverarbeitungs-Software-Stack, der
+zusammen mit einer oder mehreren 3D-Kameras wie dem
+
+rc_visard
+
+ oder
+
+rc_viscore
+
+ von Roboception betrieben wird. Gemeinsam erstellen und verarbeiten
+sie rektifizierte Bilder, sowie Disparitäts-, Konfidenz- und
+Fehlerbilder, mit denen sich die Tiefenwerte der Aufnahme berechnen
+lassen.
+
+Im Folgenden sind die zugrunde liegenden Messprinzipien genauer
+dargestellt.
+
