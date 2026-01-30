@@ -1,0 +1,23 @@
+Measurement principles
+
+The
+
+rc_reason_stack
+
+ is a high-performance 3D-image-processing software stack that is used
+in combination with one or more 3D cameras such as Roboception's 3D
+camera
+
+rc_visard
+
+ or
+
+rc_viscore
+
+. Together, they provide rectified camera, disparity, confidence, and
+error images, which allow the viewed scene's depth values along with
+their uncertainties to be computed.
+
+In the following, the underlying measurement principles are explained
+in more detail.
+

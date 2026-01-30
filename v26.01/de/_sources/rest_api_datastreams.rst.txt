@@ -1,0 +1,23 @@
+Datenströme
+
+Über die folgenden Ressourcen und Anfragen ist es möglich, auf die
+Datenströme der
+
+rc_dynamics-Schnittstelle
+
+ zuzugreifen und diese zu konfigurieren. Mit diesen REST-API-Anfragen
+ist es möglich,
+
+   die verfügbaren und laufenden Datenströme anzuzeigen, z.B.  curl -X
+   GET http://<host>/api/v1/datastreams
+
+   einen Datenstrom in Richtung eines Ziels zu starten, z.B.  curl -X
+   PUT --header 'Content-Type: application/x-www-form-urlencoded' -d
+   'destination=<target-ip>:<target-port>'
+   http://<host>/api/v1/datastreams/pose
+
+   Datenströme zu stoppen, z.B.  curl -X DELETE
+   http://<host>/api/v1/datastreams/pose?destination=<target-ip
+   >:<target-port>
+
+Die folgende Liste enthält alle REST-API-Anfragen zu Datenströmen:

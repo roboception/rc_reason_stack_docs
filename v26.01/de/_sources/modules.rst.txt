@@ -1,0 +1,87 @@
+Softwaremodule
+
+Der
+
+rc_reason_stack
+
+ beinhaltet eine Reihe von Softwaremodulen mit verschiedenen
+Funktionalitäten. Jedes Softwaremodul bietet über seine zugehörige
+
+Node
+
+ eine Schnittstelle über
+
+REST-API-Schnittstelle
+
+ oder das
+
+Generic Robot Interface
+
+ an.
+
+Der
+
+rc_reason_stack
+
+ bietet die Möglichkeit, mehrere 3D Kameras wie den
+
+rc_visard
+
+ anzuschließen. Die Bilddaten jedes Geräts werden in separaten
+
+Kamerapipelines
+
+ verarbeitet, welche jeweils aus mehreren verschiedenen
+Softwaremodulen bestehen. Die Module, die innerhalb einer Pipeline
+laufen, sind pipelinespezifisch. Das heißt, sie können verschiedene
+Parameterwerte für jede Pipeline haben. Die Softwaremodule, die
+außerhalb der Pipelines laufen, sind global und stellen globale Daten
+für alle Pipelines bereit. Eine Übersicht ist in
+
+Abb. 7
+
+ dargestellt. Die Portnummern sind für die Standardinstallation wie in
+
+Installation
+
+ beschrieben angegeben und können in der Docker Compose-Datei geändert
+werden.
+
+
+Die pipelinespezifischen Softwaremodule des
+
+rc_reason_stack
+
+ können unterteilt werden in
+
+Kamera Modul\:(Abschnitt \ref{camera:sect-camera})  erfasst Bildpaare
+und führt die planare Rektifizierung durch, wodurch die Kamera als
+Messinstrument verwendet werden kann. In Abhängigkeit vom ausgewählten
+Kamerapipelinetyp bietet dieses Modul unterschiedliche
+Laufzeitparameter.
+
+3D-Module\:(Abschnitt \ref{camera_modules:sect-3d-camera-modules})
+welche 3D Tiefeninformationen, wie Disparitäts-, Fehler- und
+Konfidenzbilder, bereitstellen,
+
+Detektions- und Messmodule\:(Abschnitt \ref{detection_modules:sect-
+detection-modules})  welche eine Vielzahl verschiedener
+Detektionsfunktionen, wie Greifpunktberechnungen und Objekterkennung
+anbieten.
+
+Konfigurationsmodule\:(Abschnitt \ref{configuration_modules:sect-
+configuration-modules})  welche es dem Nutzer ermöglichen,
+Kalibrierungen durchzuführen und den rc_reason_stack für spezielle
+Anwendungen zu konfigurieren.
+
+Die Softwaremodule, die global für alle Kamerapipelines auf dem
+
+rc_reason_stack
+
+ laufen, sind
+
+Datenbankmodule\:(Abschnitt \ref{database_modules:sect-database-
+modules})  welche dem Nutzer die Konfiguration globaler Daten
+ermöglichen, die in allen anderen Modulen verfügbar sind, wie Load
+Carrier, Regions of Interest und Greifer.
+

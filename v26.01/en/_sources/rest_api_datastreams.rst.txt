@@ -1,0 +1,23 @@
+Datastreams
+
+The following resources and requests allow access to and configuration
+of the
+
+rc_dynamics interface
+
+ data streams. These REST-API requests offer
+
+   showing available and currently running data streams, e.g.,  curl
+   -X GET http://<host>/api/v1/datastreams
+
+   starting a data stream to a destination, e.g.,  curl -X PUT
+   --header 'Content-Type: application/x-www-form-urlencoded' -d
+   'destination=<target-ip>:<target-port>'
+   http://<host>/api/v1/datastreams/pose
+
+   and stopping data streams, e.g.,  curl -X DELETE
+   http://<host>/api/v1/datastreams/pose?destination=<target-ip
+   >:<target-port>
+
+The following list includes all REST-API requests associated with data
+streams:
