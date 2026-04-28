@@ -1,0 +1,110 @@
+Sicherheit
+
+Warnung: Vor Inbetriebnahme des
+
+  rc_reason_stack
+
+  -Produkts muss der Bediener alle Anweisungen in diesem Handbuch
+  gelesen und verstanden haben.
+
+Warnung: Wird der
+
+  rc_reason_stack
+
+   zusammen mit
+
+  rc_visard
+
+  -Produkten betrieben, muss der Bediener alle Anweisungen zur
+  Sicherheit, Inbetriebnahme und Wartung im
+
+  rc_visard
+
+  -Bedienhandbuch gelesen und verstanden haben.
+
+Bemerkung: Der Begriff "Bediener" bezieht sich auf jede Person, die
+  in Verbindung mit dem
+
+  rc_reason_stack
+
+   mit einer der folgenden Aufgaben betraut ist:
+
+     Installation
+
+     Wartung
+
+     Inspektion
+
+     Kalibrierung
+
+     Programmierung
+
+     Außerbetriebnahme
+
+Das vorliegende Handbuch geht auf die verschiedenen Softwaremodule des
+
+rc_reason_stack
+
+ ein und erläutert allgemeine Aspekte zum Lebenszyklus des Produkts:
+von der Installation über die Verwendung bis hin zur
+Außerbetriebnahme.
+
+Die im vorliegenden Handbuch enthaltenen Zeichnungen und Fotos sind
+Beispiele zur Veranschaulichung. Das ausgelieferte Produkt kann
+hiervon abweichen.
+
+Allgemeine Sicherheitshinweise
+
+Bemerkung: Wird der
+
+  rc_reason_stack
+
+   entgegen den hierin angegebenen Sicherheitshinweisen verwendet, so
+  kann dies zu Personen- oder Sachschäden sowie zum Verlust der
+  Garantie führen.
+
+Bestimmungsgemäße Verwendung
+
+Warnung: Der
+
+  rc_reason_stack
+
+   ist
+
+  NICHT
+
+   für sicherheitskritische Anwendungen bestimmt.
+
+Der vom
+
+rc_reason_stack
+
+ verwendete Schnittstellenstandard GigE Vision® unterstützt weder
+Authentifizierung noch Verschlüsselung. Alle von diesem und an dieses
+Gerät gesandten Daten werden ohne Authentifizierung und
+Verschlüsselung übermittelt und könnten daher von einem Dritten
+abgefangen oder manipuliert werden. Es liegt in der Verantwortung des
+Bedieners, den
+
+rc_reason_stack
+
+ nur an ein gesichertes internes Netzwerk anzuschließen.
+
+Warnung: Der
+
+  rc_reason_stack
+
+   muss an gesicherte interne Netzwerke angeschlossen werden.
+
+Der
+
+rc_reason_stack
+
+ darf nur im Rahmen seiner technischen Spezifikation verwendet werden.
+Jede andere Verwendung des Produkts gilt als nicht bestimmungsgemäße
+Verwendung. Roboception haftet nicht für Schäden, die aus
+unsachgemäßer oder nicht bestimmungsgemäßer Verwendung entstehen.
+
+Warnung: Die lokalen und/oder nationalen Gesetze, Vorschriften und
+  Richtlinien zu Automationssicherheit und allgemeiner
+  Maschinensicherheit sind stets einzuhalten.

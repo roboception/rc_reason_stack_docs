@@ -1,0 +1,34 @@
+3D-Module
+
+Die 3D-Kamera-Software des
+
+rc_reason_stack
+
+ enthält die folgenden Module:
+
+Stereo-Matching Modul (rc_stereomatching, Abschnitt
+\ref{stereo_matching:sect-stereo-matching})  nutzt die rektifizierten
+Bildpaare der verbundenen Stereokamera, z.B. des rc_visard, um 3D-
+Tiefeninformationen, z.B. für Disparitäts-, Fehler- und
+Konfidenzbilder, zu berechnen. Dieses Modul läuft nur auf Pipelines
+für Stereokameras, d.h. rc_visard, rc_viscore and stereo_ace.
+
+Zivid Modul (rc_zivid, Abschnitt \ref{zivid:sect-zivid})  stellt 3D-
+Tiefeninformationen, z.B. Disparitäts-, Fehler- und Konfidenzbilder,
+der angeschlossenen zivid Structured Light Kamera zur Verfügung.
+Dieses Modul läuft nur auf Pipelines vom Typ zivid.
+
+Orbbec Modul (rc_orbbec, Abschnitt \ref{orbbec:sect-orbbec})  stellt
+3D-Tiefeninformationen, z.B. Disparitäts-, Fehler- und
+Konfidenzbilder, der angeschlossenen Orbbec Gemini 335Le Stereokamera
+zur Verfügung. Dieses Modul läuft nur auf Pipelines vom Typ orbbec.
+
+Diese Softwaremodule sind pipelinespezifisch, was heißt, dass sie
+innerhalb jeder Kamerapipeline laufen. Änderungen ihrer Einstellungen
+oder Parameter gelten nur für die zugehörige Pipeline und haben keinen
+Einfluss auf andere Kamerapipelines auf dem
+
+rc_reason_stack
+
+.
+

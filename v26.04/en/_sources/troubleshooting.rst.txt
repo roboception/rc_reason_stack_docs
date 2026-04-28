@@ -1,0 +1,153 @@
+Troubleshooting
+
+Camera-image issues
+
+The camera image is too bright
+
+If the camera is in manual exposure mode, decrease the exposure time,
+or
+
+switch to auto-exposure mode.
+
+The camera image is too dark
+
+If the camera is in manual exposure mode, increase the exposure time,
+or
+
+switch to auto-exposure mode.
+
+The camera image is too noisy
+
+Large gain factors cause high-amplitude image noise. To decrease the
+image noise,
+
+use an additional light source to increase the scene's light
+intensity, or
+
+choose a greater maximal auto-exposure time.
+
+The camera image is out of focus
+
+Check whether the object is too close to the lens and increase the
+distance between the object and the lens if it is.
+
+Check whether the camera lenses are dirty and clean them if they are.
+
+If none of the above applies, a severe hardware problem might exist.
+Please contact support\:(Section \ref{contact:sect-contact}).
+
+The camera image is blurred
+
+Fast motions in combination with long exposure times can cause blur.
+To reduce motion blur,
+
+decrease the motion speed of the camera,
+
+decrease the motion speed of objects in the field of view of the
+camera, or
+
+decrease the exposure time of the camera.
+
+The camera image frame rate is too low
+
+Increase the image frame rate.
+
+The maximal frame rate of the cameras is 25 Hz.
+
+Depth/Disparity, error, and confidence image issues
+
+All these guidelines also apply to error and confidence images,
+because they correspond directly to the disparity image.
+
+The disparity image is too sparse or empty
+
+Check whether the camera images are well exposed and sharp. Follow the
+instructions in Camera-image issues\:(Section \ref{troubleshooting
+:sect-camera-issues}) if applicable.
+
+Check whether the scene has enough texture and install an external
+pattern projector if required.
+
+Decrease the Minimum Distance\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Increase the Maximum Distance\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Check whether the object is too close to the cameras. Consider the
+different depth ranges of the camera variants.
+
+Decrease the Minimum Confidence\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Increase the Maximum Depth Error\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Choose a lesser Disparity Image Quality\:(Section \ref{stereo_matching
+:sect-disp-image-parameters}). Lower resolution disparity images are
+generally less sparse.
+
+Check the cameras' calibration and recalibrate if required (see Camera
+calibration, Section \ref{camera_calibration:sect-camera-
+calibration}).
+
+The disparity images' frame rate is too low
+
+Check and increase the frame rate of the camera images. The frame rate
+of the disparity image cannot be greater than the frame rate of the
+camera images.
+
+Choose a lesser Disparity Image Quality\:(Section \ref{stereo_matching
+:sect-disp-image-parameters}).
+
+Increase the Minimum Distance\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}) as much as possible for the application.
+
+The disparity image does not show close objects
+
+Check whether the object is too close to the cameras. Consider the
+depth ranges of the camera variants.
+
+Decrease the Minimum Distance\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+The disparity image does not show distant objects
+
+Increase the Maximum Distance\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Increase the Maximum Depth Error\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Decrease the Minimum Confidence\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+The disparity image is too noisy
+
+Increase the Segmentation value\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Increase the Fill-In value\:(Section \ref{stereo_matching:sect-disp-
+image-parameters}).
+
+The disparity values or the resulting depth values are too inaccurate
+
+Decrease the distance between the camera and the scene. Depth-
+measurement error grows quadratically with the distance from the
+cameras.
+
+Check whether the scene contains repetitive patterns and remove them
+if it does. They could cause wrong disparity measurements.
+
+The disparity image is too smooth
+
+Decrease the Fill-In value\:(Section \ref{stereo_matching:sect-disp-
+image-parameters}).
+
+The disparity image does not show small structures
+
+Decrease the Segmentation value\:(Section \ref{stereo_matching:sect-
+disp-image-parameters}).
+
+Decrease the Fill-In value\:(Section \ref{stereo_matching:sect-disp-
+image-parameters}).
