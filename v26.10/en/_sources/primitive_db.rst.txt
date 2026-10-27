@@ -1,0 +1,316 @@
+PrimitiveDB
+
+Introduction
+
+The PrimitiveDB module (geometric primitive database module) allows
+the global definition of geometric primitives, which can then be used
+in detection modules. Currently, only planes are supported.
+
+A plane can, for example, serve as reference plane for measuring the
+dimensions of detected items in
+
+BoxPick
+
+ and
+
+ItemPickAI
+
+.
+
+Note: This module is global on the
+
+  rc_reason_stack
+
+  . Changes to its settings or parameters affect every camera pipeline
+  running on the
+
+  rc_reason_stack
+
+  .
+
+The PrimitiveDB module is a base module which is available on every
+
+rc_reason_stack
+
+.
+
+Specifications of the PrimitiveDB module      Supported primitives
+plane  Max. number of planes  100  Planes used for  Dimensioning of
+detected items  Supported reference frames  camera, external
+
+Plane
+
+A plane is defined in Hesse normal form
+
+   \mathbf{n} \cdot \mathbf{x} + d = 0,
+
+where \mathbf{n} is the normal of the plane ("normal") and d is the
+signed distance of the plane from the origin of the reference frame
+("distance") in meters. All points \mathbf{x} that fulfill this
+equation lie on the plane. The normal is stored as a unit vector. If a
+normal with a different length is given, the normal and the distance
+are scaled accordingly, which describes the same plane.
+
+In the REST-API, a plane is defined by the following values:
+
+id: Unique name of the plane
+
+normal: normal of the plane with the components x, y and z
+
+distance: signed distance of the plane from the origin of the
+reference frame in meters
+
+pose_frame: reference frame of the plane, either camera or external
+
+The PrimitiveDB module only stores planes and does not estimate them.
+A plane can be estimated from the current sensor data with the
+"compute_plane" service of the Measure module (see
+
+Estimating planes
+
+) and then stored with "set_plane".
+
+The
+
+rc_reason_stack
+
+ can persistently store up to 100 different planes. The configuration
+of planes is normally performed offline, during the set up of the
+desired application. This can be done via the
+
+REST-API interface
+
+ of the PrimitiveDB module, or in the
+
+rc_reason_stack
+
+
+Web GUI
+
+ on the page
+
+Planes
+
+ under
+
+Database
+
+.
+
+Note: The configured planes are persistent even over firmware
+  updates and rollbacks.
+
+Interaction with other modules
+
+Internally, the PrimitiveDB module depends on, and interacts with
+other on-board modules as listed below.
+
+Hand-eye calibration
+
+In case the camera has been calibrated to a robot, a plane can be
+provided in the robot coordinate frame by setting the corresponding
+"pose_frame" argument.
+
+Two different "pose_frame" values can be chosen:
+
+Camera frame (camera). The plane is provided in the camera frame, and
+no prior knowledge about the pose of the camera in the environment is
+required. This means that the configured planes move with the camera.
+It is the user's responsibility to update the configured planes if the
+camera frame moves (e.g. with a robot-mounted camera).
+
+External frame (external). The plane is provided in the external
+frame, configured by the user during the hand-eye calibration process.
+The module relies on the on-board Hand-eye calibration
+module\:(Section \ref{handeye_calibration:sect-handeye-calibration})
+to retrieve the sensor mounting (static or robot mounted) and the
+hand-eye transformation.
+
+The plane is not transformed when it is stored, i.e. it must already
+be given in the desired "pose_frame".
+
+Note: If no hand-eye calibration is available, all "pose_frame"
+  values should be set to "camera".
+
+All "pose_frame" values that are not "camera" or "external" are
+rejected.
+
+Services
+
+The PrimitiveDB module is called "rc_primitive_db" in the REST-API and
+is represented in the
+
+Web GUI
+
+ under Database ‣ Planes. The user can explore and call the
+PrimitiveDB module's services, e.g. for development and testing, using
+the
+
+REST-API interface
+
+ or the Web GUI.
+
+The PrimitiveDB module offers the following services.
+
+set_plane
+
+   Persistently stores a plane on the
+
+   rc_reason_stack
+
+   . An existing plane with the same "id" is overwritten. All
+   configured planes are persistent over firmware updates and
+   rollbacks.
+
+   Details
+
+   This service can be called as follows.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/set_plane
+
+   Request
+
+   Details for the definition of a plane are given in
+
+   Plane
+
+   .
+
+   The definition for the request arguments with corresponding
+   datatypes is:
+
+      {
+        "args": {
+          "distance": "float64",
+          "id": "string",
+          "normal": {
+            "x": "float64",
+            "y": "float64",
+            "z": "float64"
+          },
+          "pose_frame": "string"
+        }
+      }
+
+   Response
+
+   The definition for the response with corresponding datatypes is:
+
+      {
+        "name": "set_plane",
+        "response": {
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+get_planes
+
+   Returns the configured planes with the requested "plane_ids".
+
+   Details
+
+   This service can be called as follows.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/get_planes
+
+   Request
+
+   If no "plane_ids" are provided, all configured planes are returned.
+
+   The definition for the request arguments with corresponding
+   datatypes is:
+
+      {
+        "args": {
+          "plane_ids": [
+            "string"
+          ]
+        }
+      }
+
+   Response
+
+   The definition for the response with corresponding datatypes is:
+
+      {
+        "name": "get_planes",
+        "response": {
+          "planes": [
+            {
+              "distance": "float64",
+              "id": "string",
+              "normal": {
+                "x": "float64",
+                "y": "float64",
+                "z": "float64"
+              },
+              "pose_frame": "string"
+            }
+          ],
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+delete_planes
+
+   Deletes the configured planes with the requested "plane_ids".
+
+   Details
+
+   This service can be called as follows.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/delete_planes
+
+   Request
+
+   All planes to be deleted must be explicitly stated in "plane_ids".
+
+   The definition for the request arguments with corresponding
+   datatypes is:
+
+      {
+        "args": {
+          "plane_ids": [
+            "string"
+          ]
+        }
+      }
+
+   Response
+
+   The definition for the response with corresponding datatypes is:
+
+      {
+        "name": "delete_planes",
+        "response": {
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+Return codes
+
+Each service response contains a "return_code", which consists of a
+"value" plus an optional "message". A successful service returns with
+a "return_code" value of "0". Negative "return_code" values indicate
+that the service failed. Positive "return_code" values indicate that
+the service succeeded with additional information. The smaller value
+is selected in case a service has multiple "return_code" values, but
+all messages are appended in the "return_code" message.
+
+The following table contains a list of common codes:
+
+Return codes of the PrimitiveDB module's services      Code
+Description  0  Success  -1  An invalid argument was provided  -10
+New element could not be added as the maximum storage capacity of
+planes has been exceeded  10  The maximum storage capacity of planes
+has been reached  11  An existing plane was overwritten by the call to
+set_plane

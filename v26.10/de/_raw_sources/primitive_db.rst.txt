@@ -1,0 +1,265 @@
+
+.. include:: global_rst.glb
+
+.. _sect-primitive-db:
+
+PrimitiveDB
+===========
+
+.. index:: ! PrimitiveDB
+   single: plane
+   single: BoxPick; plane
+   single: dimensioning; plane
+
+Introduction
+------------
+
+The PrimitiveDB module (geometric primitive database module) allows the global definition of
+geometric primitives, which can then be used in detection modules. Currently, only planes are supported.
+
+.. only:: rc_cube or rc_reason_stack
+
+   A plane can, for example, serve as reference plane for measuring the dimensions of detected items
+   in :ref:`BoxPick<sect-boxpick-dimensioning>`:latex:`\:(Section \ref{boxpick:sect-boxpick-dimensioning})` and :ref:`ItemPickAI<sect-itempick-dimensioning>`:latex:`\:(Section \ref{itempick:sect-itempick-dimensioning})`.
+
+.. only:: rc_visard or rc_visard_ng
+
+   A plane can, for example, serve as reference plane for measuring the dimensions of detected items
+   in :ref:`BoxPick<sect-boxpick-dimensioning>`:latex:`\:(Section \ref{boxpick:sect-boxpick-dimensioning})`.
+
+.. only:: rc_cube or rc_reason_stack
+
+   .. note::
+
+      This module is global on the |rc_xxx|. Changes to its settings or parameters affect
+      every camera pipeline running on the |rc_xxx|.
+
+The PrimitiveDB module is a base module which is available on every |rc_xxx|.
+
+.. tabularcolumns:: |l|L|
+.. _tab-primitive-db-spec:
+.. csv-table:: Specifications of the PrimitiveDB module
+
+    "Supported primitives",    "plane"
+    "Max. number of planes",   "100"
+    "Planes used for",   "Dimensioning of detected items"
+    "Supported reference frames", "camera, external"
+
+.. _sect-primitive-db-plane:
+
+Plane
+-----
+
+A plane is defined in Hesse normal form
+
+.. math::
+
+   \mathbf{n} \cdot \mathbf{x} + d = 0,
+
+where :math:`\mathbf{n}` is the normal of the plane (``normal``) and :math:`d` is the signed distance
+of the plane from the origin of the reference frame (``distance``) in meters.
+All points :math:`\mathbf{x}` that fulfill this equation lie on the plane.
+The normal is stored as a unit vector. If a normal with a different length is given,
+the normal and the distance are scaled accordingly, which describes the same plane.
+
+In the |restapi|, a plane is defined by the following values:
+
+- ``id``: Unique name of the plane
+- ``normal``: normal of the plane with the components ``x``, ``y`` and ``z``
+- ``distance``: signed distance of the plane from the origin of the reference frame in meters
+- ``pose_frame``: reference frame of the plane, either ``camera`` or ``external``
+
+.. The ID ``LOAD_CARRIER_FLOOR`` is reserved and cannot be used for a plane.
+
+The PrimitiveDB module only stores planes and does not estimate them. A plane can be estimated
+from the current sensor data with the ``compute_plane`` service of the
+Measure module (see :ref:`sect-measure-compute-plane`:latex:`, Section \ref{measure:sect-measure-compute-plane}`)
+and then stored with ``set_plane``.
+
+The |rcxxx| can persistently store up to 100 different planes.
+The configuration of planes is normally performed offline, during
+the set up of the desired application.
+This can be done via the :doc:`rest_api`:latex:`\:(Section \ref{rest_api:sect-rest-api})`
+of the PrimitiveDB module, or in
+the |rcxxx| :ref:`sect-web-gui`:latex:`\:(Section \ref{webgui:sect-web-gui})` on the page
+*Planes* under *Database*.
+
+.. Note::
+  The configured planes are persistent even over firmware updates and rollbacks.
+
+.. _sect-primitive-db-dependencies:
+
+Interaction with other modules
+------------------------------
+
+Internally, the PrimitiveDB module depends on, and interacts with other on-board
+modules as listed below.
+
+.. _sect-primitive-db-hand-eye-dep:
+
+Hand-eye calibration
+^^^^^^^^^^^^^^^^^^^^
+
+In case the camera has been calibrated to a robot, a plane
+can be provided in the robot coordinate frame by setting the corresponding
+``pose_frame`` argument.
+
+Two different ``pose_frame`` values can be chosen:
+
+1. **Camera frame** (``camera``).
+   The plane is provided in the camera frame,
+   and no prior knowledge about the pose of the camera in the environment is required.
+   This means that the configured planes move with the camera.
+   It is the user's responsibility to update the configured planes
+   if the camera frame moves (e.g. with a robot-mounted camera).
+
+2. **External frame** (``external``).
+   The plane is provided in the external frame,
+   configured by the user during the hand-eye calibration process.
+   The module relies on the on-board
+   :doc:`Hand-eye calibration module<handeye_calibration>`:latex:`\:(Section \ref{handeye_calibration:sect-handeye-calibration})`
+   to retrieve the sensor mounting (static or robot mounted) and
+   the hand-eye transformation.
+
+The plane is not transformed when it is stored, i.e. it must already be given in the desired
+``pose_frame``.
+
+.. Note::
+   If no hand-eye calibration is available, all ``pose_frame`` values should be set to ``camera``.
+
+All ``pose_frame`` values that are not ``camera`` or ``external`` are rejected.
+
+.. _sect-primitive-db-services:
+
+Services
+--------
+
+.. index::
+   single: PrimitiveDB; services
+
+The PrimitiveDB module is called ``rc_primitive_db`` in the |rest-api| and is represented in the
+:ref:`Web GUI<sect-web-gui>`:latex:`\:(Section \ref{webgui:sect-web-gui})` under
+:menuselection:`Database --> Planes`.
+The user can explore and call the PrimitiveDB module's services,
+e.g. for development and testing, using the
+:doc:`rest_api`:latex:`\:(Section \ref{rest_api:sect-rest-api})` or
+the |webgui|.
+
+The PrimitiveDB module offers the following services.
+
+.. _expl-primitive-db-srv-set-plane:
+
+``set_plane``
+^^^^^^^^^^^^^
+
+   Persistently stores a plane on the |rc_xxx|. An existing plane with the same ``id`` is overwritten.
+   All configured planes are persistent over firmware updates and rollbacks.
+
+   .. toggle-header::
+      :header: **Details**
+
+      This service can be called as follows.
+
+      .. code-block:: bash
+
+         PUT http://<host>/api/v2/nodes/rc_primitive_db/services/set_plane
+
+      .. tabs::
+
+         .. tab:: **Request**
+
+            Details for the definition of a plane are given in
+            :ref:`sect-primitive-db-plane`:latex:`\:(Section \ref{primitive_db:sect-primitive-db-plane})`.
+
+            .. include:: _gen/nodes/services/rc_primitive_db_set_plane_request.txt
+
+         .. tab:: **Response**
+
+            .. include:: _gen/nodes/services/rc_primitive_db_set_plane_response.txt
+
+.. _expl-primitive-db-srv-get-planes:
+
+``get_planes``
+^^^^^^^^^^^^^^
+
+   Returns the configured planes with the requested ``plane_ids``.
+
+   .. toggle-header::
+      :header: **Details**
+
+      This service can be called as follows.
+
+      .. code-block:: bash
+
+         PUT http://<host>/api/v2/nodes/rc_primitive_db/services/get_planes
+
+      .. tabs::
+
+         .. tab:: **Request**
+
+            If no ``plane_ids`` are provided, all configured planes are returned.
+
+            .. include:: _gen/nodes/services/rc_primitive_db_get_planes_request.txt
+
+         .. tab:: **Response**
+
+            .. include:: _gen/nodes/services/rc_primitive_db_get_planes_response.txt
+
+.. _expl-primitive-db-srv-delete-planes:
+
+``delete_planes``
+^^^^^^^^^^^^^^^^^
+
+   Deletes the configured planes with the requested ``plane_ids``.
+
+   .. toggle-header::
+      :header: **Details**
+
+      This service can be called as follows.
+
+      .. code-block:: bash
+
+         PUT http://<host>/api/v2/nodes/rc_primitive_db/services/delete_planes
+
+      .. tabs::
+
+         .. tab:: **Request**
+
+            All planes to be deleted must be explicitly stated in ``plane_ids``.
+
+            .. include:: _gen/nodes/services/rc_primitive_db_delete_planes_request.txt
+
+         .. tab:: **Response**
+
+            .. include:: _gen/nodes/services/rc_primitive_db_delete_planes_response.txt
+
+
+.. _sect-primitive-db-return-codes:
+
+Return codes
+------------
+
+.. index::
+   pair: PrimitiveDB; return codes
+
+
+Each service response contains a ``return_code``,
+which consists of a ``value`` plus an optional ``message``.
+A successful service returns with a ``return_code`` value of ``0``.
+Negative ``return_code`` values indicate that the service failed.
+Positive ``return_code`` values indicate that the service succeeded with additional information.
+The smaller value is selected in case a service has multiple ``return_code`` values,
+but all messages are appended in the ``return_code`` message.
+
+The following table contains a list of common codes:
+
+.. tabularcolumns:: |c|L|
+.. _tab-primitive-db-return-codes:
+.. csv-table:: Return codes of the PrimitiveDB module's services
+    :header:  Code, Description
+
+    "0",    "Success"
+    "-1",   "An invalid argument was provided"
+    "-10",  "New element could not be added as the maximum storage capacity of planes has been exceeded"
+    "10",   "The maximum storage capacity of planes has been reached"
+    "11",  "An existing plane was overwritten by the call to ``set_plane``"

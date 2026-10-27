@@ -1,0 +1,126 @@
+Sicherheit
+
+Warnung: Vor Inbetriebnahme des
+
+  rc_reason_stack
+
+  -Produkts muss der Bediener alle Anweisungen in diesem Handbuch
+  gelesen und verstanden haben.
+
+Warnung: Wird der
+
+  rc_reason_stack
+
+   zusammen mit
+
+  rc_visard
+
+  -Produkten betrieben, muss der Bediener alle Anweisungen zur
+  Sicherheit, Inbetriebnahme und Wartung im
+
+  rc_visard
+
+  -Bedienhandbuch gelesen und verstanden haben.
+
+Bemerkung: Der Begriff "Bediener" bezieht sich auf jede Person, die
+  in Verbindung mit dem
+
+  rc_reason_stack
+
+   mit einer der folgenden Aufgaben betraut ist:
+
+     Installation
+
+     Wartung
+
+     Inspektion
+
+     Kalibrierung
+
+     Programmierung
+
+     Außerbetriebnahme
+
+Das vorliegende Handbuch geht auf die verschiedenen Softwaremodule des
+
+rc_reason_stack
+
+ ein und erläutert allgemeine Aspekte zum Lebenszyklus des Produkts:
+von der Installation über die Verwendung bis hin zur
+Außerbetriebnahme.
+
+Die im vorliegenden Handbuch enthaltenen Zeichnungen und Fotos sind
+Beispiele zur Veranschaulichung. Das ausgelieferte Produkt kann
+hiervon abweichen.
+
+Allgemeine Sicherheitshinweise
+
+Bemerkung: Wird der
+
+  rc_reason_stack
+
+   entgegen den hierin angegebenen Sicherheitshinweisen verwendet, so
+  kann dies zu Personen- oder Sachschäden sowie zum Verlust der
+  Garantie führen.
+
+Bestimmungsgemäße Verwendung
+
+Der
+
+rc_reason_stack
+
+ besteht aus Docker-Containern zur Verarbeitung industrieller 3D-
+Bilddaten, die für die Integration in Automatisierungs- und
+Robotikanwendungen bestimmt sind. Ihr bestimmungsgemäßer Zweck ist die
+Erfassung und Verarbeitung von Bilddaten sowie die Bereitstellung der
+Ergebnisse (z.B. 3D-Daten, erkannte Posen) für eine angeschlossene
+Robotersteuerung oder ein angeschlossenes Host-System.
+
+Diese Produkte sind für den Betrieb in einer vertrauenswürdigen
+Umgebung ausgelegt und bestimmt. Kameras sollten über eine direkte
+Punkt-zu-Punkt-Verbindung (1:1) zwischen dem Gerät, auf dem die
+Container ausgeführt werden, und den angeschlossenen Kameras verbunden
+werden.
+
+Mehrere Schnittstellen, die für die Interoperabilität mit
+Robotersteuerungen und industriellen Systemen erforderlich sind,
+basieren auf etablierten Industriestandards oder
+herstellerspezifischen Protokollen, die weder Verschlüsselung noch
+Authentifizierung unterstützen. Die Aktivierung dieser Schnittstellen
+außerhalb eines vertrauenswürdigen, isolierten Netzwerks kann das
+System Cybersicherheitsrisiken aussetzen und liegt außerhalb der
+bestimmungsgemäßen Verwendung des Produkts.
+
+Der Betreiber ist dafür verantwortlich sicherzustellen, dass die
+Betriebsumgebung diesen Bedingungen entspricht, einschließlich der
+physischen Zugangskontrolle zum Gerät, der Netzwerkisolierung und
+gegebenenfalls der sicheren Konfiguration des Host-Systems. Ein
+Betrieb des Produkts außerhalb der bestimmungsgemäßen Verwendung,
+insbesondere wenn ungesicherte Schnittstellen einem nicht
+vertrauenswürdigen Netzwerk zugänglich gemacht werden, kann die
+Sicherheit und Zuverlässigkeit des Systems beeinträchtigen und ist
+nicht durch die Cybersicherheits-Risikobewertung des Produkts
+abgedeckt.
+
+Warnung: Der
+
+  rc_reason_stack
+
+   ist
+
+  NICHT
+
+   für sicherheitskritische Anwendungen bestimmt.
+
+Der
+
+rc_reason_stack
+
+ darf nur im Rahmen seiner technischen Spezifikation verwendet werden.
+Jede andere Verwendung des Produkts gilt als nicht bestimmungsgemäße
+Verwendung. Roboception haftet nicht für Schäden, die aus
+unsachgemäßer oder nicht bestimmungsgemäßer Verwendung entstehen.
+
+Warnung: Die lokalen und/oder nationalen Gesetze, Vorschriften und
+  Richtlinien zu Automationssicherheit und allgemeiner
+  Maschinensicherheit sind stets einzuhalten.

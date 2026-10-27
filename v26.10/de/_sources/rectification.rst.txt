@@ -1,0 +1,18 @@
+Rektifizierung
+
+Eine rektifizierte Kamera kann mit der Brennweite als einzigen
+Modellparameter beschrieben werden. Der
+
+rc_reason_stack
+
+ stellt über seine verschiedenen Schnittstellen einen
+Brennweitenfaktor bereit. Er bezieht sich auf die Bildbreite, um
+verschiedene Bildauflösungen zu unterstützen. Die Brennweite f in
+Pixeln lässt sich leicht bestimmen, indem der Brennweitenfaktor mit
+der Bildbreite (in Pixeln) multipliziert wird.
+
+Bemerkung: Falls ein "zivid" oder "orbbec" Sensor statt einer
+  Stereokamera benutzt wird, dann steht nur ein Kamerabild zur
+  Verfügung. Dieses Kamerabild ist allerdings ebenfalls rektifiziert,
+  d.h. es ist verzeichnungsfrei und der Bildhauptpunkt befindet sich
+  in der Bildmitte.

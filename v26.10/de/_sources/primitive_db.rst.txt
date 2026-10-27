@@ -1,0 +1,343 @@
+PrimitiveDB
+
+Einführung
+
+Das PrimitiveDB Modul (Datenbankmodul für geometrische Primitive)
+ermöglicht die globale Definition von geometrischen Primitiven, die
+dann in Detektionsmodulen verwendet werden können. Derzeit werden nur
+Ebenen unterstützt.
+
+Eine Ebene kann z.B. als Referenzebene zur Messung der Abmessungen
+erkannter Objekte in
+
+BoxPick
+
+ und
+
+ItemPickAI
+
+ dienen.
+
+Bemerkung: Dieses Softwaremodul läuft global auf dem
+
+  rc_reason_stack
+
+  . Änderungen seiner Einstellungen oder Parameter betreffen alle
+  Kamerapipelines, die auf dem
+
+  rc_reason_stack
+
+   laufen.
+
+Das PrimitiveDB Modul ist ein Basismodul, welches auf jedem
+
+rc_reason_stack
+
+ verfügbar ist.
+
+Spezifikationen des PrimitiveDB Moduls      Unterstützte Primitive
+Ebene  Max. Anzahl von Ebenen  100  Verwendung der Ebenen
+Dimensionierung erkannter Objekte  Mögliche Referenzkoordinatensysteme
+camera, external
+
+Ebene
+
+Eine Ebene ist in Hessescher Normalform definiert
+
+   \mathbf{n} \cdot \mathbf{x} + d = 0,
+
+wobei \mathbf{n} die Normale der Ebene ("normal") und d der
+vorzeichenbehaftete Abstand der Ebene vom Ursprung des
+Referenzkoordinatensystems ("distance") in Metern ist. Alle Punkte
+\mathbf{x}, die diese Gleichung erfüllen, liegen auf der Ebene. Die
+Normale wird als Einheitsvektor gespeichert. Wird eine Normale mit
+einer anderen Länge angegeben, werden die Normale und der Abstand
+entsprechend skaliert, was dieselbe Ebene beschreibt.
+
+In der REST-API ist eine Ebene über folgende Werte spezifiziert:
+
+id: Eindeutiger Name der Ebene
+
+normal: Normale der Ebene mit den Komponenten x, y und z
+
+distance: vorzeichenbehafteter Abstand der Ebene vom Ursprung des
+Referenzkoordinatensystems in Metern
+
+pose_frame: Referenzkoordinatensystem der Ebene, entweder camera oder
+external
+
+Das PrimitiveDB Modul speichert Ebenen nur und schätzt sie nicht. Eine
+Ebene kann mit dem Service "compute_plane" des Measure Moduls (siehe
+
+Schätzung von Ebenen
+
+) aus den aktuellen Sensordaten geschätzt und dann mit "set_plane"
+gespeichert werden.
+
+Der
+
+rc_reason_stack
+
+ erlaubt das Speichern von bis zu 100 verschiedenen Ebenen. Die
+Konfiguration von Ebenen erfolgt in der Regel offline während der
+Einrichtung der gewünschten Anwendung. Die Konfiguration kann mithilfe
+der
+
+REST-API-Schnittstelle
+
+ des PrimitiveDB Moduls vorgenommen werden, oder über die
+
+rc_reason_stack
+
+
+Web GUI
+
+ auf der Seite
+
+Ebenen
+
+ unter dem Menüpunkt
+
+Datenbank
+
+.
+
+Bemerkung: Die erstellten Ebenen sind persistent auf dem
+
+  rc_reason_stack
+
+   gespeichert und auch nach Firmware-Updates und -Wiederherstellungen
+  verfügbar.
+
+Wechselwirkung mit anderen Modulen
+
+Die folgenden, intern auf dem
+
+rc_reason_stack
+
+ laufenden Module liefern Daten für das PrimitiveDB Modul oder haben
+Einfluss auf die Datenverarbeitung.
+
+Hand-Auge-Kalibrierung
+
+Falls die Kamera zu einem Roboter kalibriert wurde, kann eine Ebene im
+Roboterkoordinatensystem angegeben werden, indem das Argument
+"pose_frame" entsprechend gesetzt wird.
+
+Es kann zwischen den folgenden zwei Werten für "pose_frame" gewählt
+werden:
+
+Kamera-Koordinatensystem (camera): Die Ebene ist im Kamera-
+Koordinatensystem angegeben und es ist kein zusätzliches Wissen über
+die Lage der Kamera in ihrer Umgebung notwendig. Das bedeutet
+insbesondere, dass sich die konfigurierten Ebenen mit der Kamera
+bewegen. Es liegt daher in der Verantwortung des Anwenders, die
+konfigurierten Ebenen zu aktualisieren, wenn sich das Kamera-
+Koordinatensystem bewegt (beispielsweise für den Anwendungsfall einer
+robotergeführten Kamera).
+
+Benutzerdefiniertes externes Koordinatensystem (external): Die Ebene
+ist im sogenannten externen Koordinatensystem angegeben, welches vom
+Nutzer während der Hand-Auge-Kalibrierung gewählt wurde. In diesem
+Fall bezieht das Modul alle notwendigen Informationen über die
+Kameramontage (statisch oder robotergeführt) und die kalibrierte Hand-
+Auge-Transformation automatisch vom Modul Hand-Auge-
+Kalibrierung\:(Abschnitt \ref{handeye_calibration:sect-handeye-
+calibration}).
+
+Die Ebene wird beim Speichern nicht transformiert, d.h. sie muss
+bereits im gewünschten "pose_frame" angegeben sein.
+
+Bemerkung: Wurde keine Hand-Auge-Kalibrierung durchgeführt, muss als
+  Referenzkoordinatensystem "pose_frame" immer "camera" angegeben
+  werden.
+
+Zulässige Werte zur Angabe des Referenzkoordinatensystems sind
+"camera" und "external". Andere Werte werden als ungültig
+zurückgewiesen.
+
+Services
+
+Das PrimitiveDB Modul wird in der REST-API als "rc_primitive_db"
+bezeichnet und in der
+
+Web GUI
+
+ unter Datenbank ‣ Ebenen dargestellt. Die angebotenen Services des
+PrimitiveDB Moduls können mithilfe der
+
+REST-API-Schnittstelle
+
+ oder der Web GUI ausprobiert und getestet werden.
+
+Das PrimitiveDB Modul stellt folgende Services zur Verfügung.
+
+set_plane
+
+   speichert eine Ebene auf dem
+
+   rc_reason_stack
+
+   . Eine bestehende Ebene mit derselben "id" wird überschrieben. Alle
+   Ebenen sind dauerhaft gespeichert, auch über Firmware-Updates und
+   -Wiederherstellungen hinweg.
+
+   Details
+
+   Dieser Service kann wie folgt aufgerufen werden.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/set_plane
+
+   Request
+
+   Die Definition einer Ebene wird in
+
+   Ebene
+
+    beschrieben.
+
+   Die Definition der *Request*-Argumente mit jeweiligen Datentypen
+   ist:
+
+      {
+        "args": {
+          "distance": "float64",
+          "id": "string",
+          "normal": {
+            "x": "float64",
+            "y": "float64",
+            "z": "float64"
+          },
+          "pose_frame": "string"
+        }
+      }
+
+   Response
+
+   Die Definition der *Response* mit jeweiligen Datentypen ist:
+
+      {
+        "name": "set_plane",
+        "response": {
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+get_planes
+
+   gibt die mit "plane_ids" spezifizierten, gespeicherten Ebenen
+   zurück.
+
+   Details
+
+   Dieser Service kann wie folgt aufgerufen werden.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/get_planes
+
+   Request
+
+   Werden keine "plane_ids" angegeben, enthält die Serviceantwort alle
+   gespeicherten Ebenen.
+
+   Die Definition der *Request*-Argumente mit jeweiligen Datentypen
+   ist:
+
+      {
+        "args": {
+          "plane_ids": [
+            "string"
+          ]
+        }
+      }
+
+   Response
+
+   Die Definition der *Response* mit jeweiligen Datentypen ist:
+
+      {
+        "name": "get_planes",
+        "response": {
+          "planes": [
+            {
+              "distance": "float64",
+              "id": "string",
+              "normal": {
+                "x": "float64",
+                "y": "float64",
+                "z": "float64"
+              },
+              "pose_frame": "string"
+            }
+          ],
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+delete_planes
+
+   löscht die mit "plane_ids" spezifizierten, gespeicherten Ebenen.
+
+   Details
+
+   Dieser Service kann wie folgt aufgerufen werden.
+
+      PUT http://<host>/api/v2/nodes/rc_primitive_db/services/delete_planes
+
+   Request
+
+   Alle zu löschenden Ebenen müssen explizit in "plane_ids" angegeben
+   werden.
+
+   Die Definition der *Request*-Argumente mit jeweiligen Datentypen
+   ist:
+
+      {
+        "args": {
+          "plane_ids": [
+            "string"
+          ]
+        }
+      }
+
+   Response
+
+   Die Definition der *Response* mit jeweiligen Datentypen ist:
+
+      {
+        "name": "delete_planes",
+        "response": {
+          "return_code": {
+            "message": "string",
+            "value": "int16"
+          }
+        }
+      }
+
+Rückgabecodes
+
+Zusätzlich zur eigentlichen Serviceantwort gibt jeder Service einen
+sogenannten "return_code" bestehend aus einem Integer-Wert und einer
+optionalen Textnachricht zurück. Erfolgreiche Service-Anfragen werden
+mit einem Wert von "0" quittiert. Positive Werte bedeuten, dass die
+Service-Anfrage zwar erfolgreich bearbeitet wurde, aber zusätzliche
+Informationen zur Verfügung stehen. Negative Werte bedeuten, dass
+Fehler aufgetreten sind. Für den Fall, dass mehrere Rückgabewerte
+zutreffend wären, wird der kleinste zurückgegeben, und die
+entsprechenden Textnachrichten werden in "return_code.message"
+akkumuliert.
+
+Die folgende Tabelle listet die möglichen Rückgabe-Codes auf:
+
+Rückgabe-Codes der Services des PrimitiveDB Moduls      Code
+Beschreibung  0  Erfolgreich  -1  Ungültige(s) Argument(e)  -10  Das
+neue Element konnte nicht hinzugefügt werden, da die maximal
+speicherbare Anzahl an Ebenen überschritten wurde.  10  Die maximal
+speicherbare Anzahl an Ebenen wurde erreicht.  11  Mit dem Aufruf von
+set_plane wurde eine bereits existierende Ebene mit derselben id
+überschrieben.
